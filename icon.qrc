@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/homeIcon.svg</file>
+        <file>icon/notifyIcon.svg</file>
+        <file>icon/settingIcon.svg</file>
+        <file>icon/down_arrow_icon.svg</file>
+        <file>icon/up_arrow_icon.svg</file>
+        <file>icon/arrow_downward_24dp.svg</file>
+        <file>icon/arrow_upward_24dp.svg</file>
+        <file>icon/home_24dp.svg</file>
+        <file>icon/notify_24dp.svg</file>
+        <file>icon/settings_24dp.svg</file>
+    </qresource>
+</RCC>

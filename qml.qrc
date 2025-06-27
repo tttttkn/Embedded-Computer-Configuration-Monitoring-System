@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ProgressCircle.qml</file>
+        <file>MenuBarView.qml</file>
+        <file>CpuGadget.qml</file>
+        <file>GpuGadget.qml</file>
+        <file>MemoryGadget.qml</file>
+        <file>StorageNetworkGadget.qml</file>
+        <file>DateTimeGadget.qml</file>
+        <file>CpuInfoView.qml</file>
+        <file>HomeGadget.qml</file>
+        <file>GpuInfoView.qml</file>
+        <file>MemoryInfoView.qml</file>
+        <file>NetworkInfoView.qml</file>
+    </qresource>
+</RCC>
