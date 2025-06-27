@@ -5,7 +5,7 @@ import QtQuick.Window 2.12
 import QtQuick.Shapes 1.12
 import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt version
 import QtQuick.Controls.Styles 1.4
-import QtCharts 2.5
+//import QtCharts 2.5
 
 Item {
 
@@ -120,7 +120,7 @@ Rectangle {
 
                             // Nhãn trục Y
                             ctx.fillStyle = "black";
-                            ctx.font = "10px Arial bold";
+                            ctx.font = "10px Arial";
                             ctx.fillText(y + "%", width-30, height -10 - y * gridStepY + 3);
                         }
 
@@ -224,13 +224,13 @@ Rectangle {
                         rowSpacing: 2
 
                         Label {color: "black"; text: "Processes:" ; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: "239"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: cpuModel.totalProcesses; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
 
                         Label {color: "black"; text: "Threads:" ; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: "3711"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: cpuModel.totalThreads; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
 
                         Label {color: "black"; text: "Cores:" ; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: "6"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: "1"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                     }
                 }
                 GroupBox
@@ -244,13 +244,13 @@ Rectangle {
                         Layout.fillHeight: false
 
                         Label { color: "black"; text: "Utilization:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label { text: "90 %"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
+                        Label { text: cpuModel.cpuUsage.toFixed(1) + "%"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
 
                         Label { color: "black";text: "Clock:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label { color: "black";text: "2.74 GHz"; font.pointSize: 10; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
+                        Label { color: "black";text: cpuModel.cpuClock.toFixed(0) + "MHz"; font.pointSize: 10; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
 
                         Label { color: "black";text: "Temp:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: cpuModel.cpuTemp + "°C"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: cpuModel.cpuTemp.toFixed(1) + "°C"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                     }
                 }
 

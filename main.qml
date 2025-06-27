@@ -19,7 +19,7 @@ Window {
     color: "#cacaca"
 
     title: "System Dashboard"
-        flags: Qt.Window | Qt.FramelessWindowHint
+   //     flags: Qt.Window | Qt.FramelessWindowHint
 
     property color buttonColor: "#3498db"
     property color buttonPressedColor: "#2980b9"

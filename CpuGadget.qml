@@ -69,14 +69,14 @@ Button {
         id: control
         x: 82
         y: 45
-        width: 50  // Rộng hơn để đẹp hơn
-        height: 8    // Chiều cao mỏng, hiện đại        
-        value: cpuModel.cpuTemp/100   // Giá trị tiến trình
+        width: 50  
+        height: 8       
+        value: cpuModel.cpuTemp / 100
 
         Behavior on value {
             NumberAnimation {
-                duration: 500  // Thời gian animation (ms)
-                easing.type: Easing.InOutQuad  // Hiệu ứng easing mượt mà
+                duration: 500  
+                easing.type: Easing.InOutQuad  
             }
         }
 
@@ -84,8 +84,8 @@ Button {
             implicitWidth: 200
             implicitHeight: 8
             color: "#555a61"
-            radius: height/2        // Bo tròn hoàn toàn
-            border.color: "black" // Viền nhẹ
+            radius: height/2        
+            border.color: "black" 
             border.width: 1
 
 
@@ -111,11 +111,7 @@ Button {
                         position: 1
                         color: "#0076ca"
                     }
-                }
-                // Bo tròn tương tự background
-                
-                // Gradient màu
-                
+                }                
                 
               }
             }
@@ -126,16 +122,18 @@ Button {
         id: control1
         x: 82
         y: 70
-        width: 50  // Rộng hơn để đẹp hơn
-        height: 8    // Chiều cao mỏng, hiện đại
+        width: 50  
+        height: 8   
         
         Behavior on value {
             NumberAnimation {
-                duration: 500  // Thời gian animation (ms)
+                duration: 500  
+                easing.type: Easing.InOutQuad  
             }
         }
 
-        value: 0.3
+        value: cpuModel.cpuClock / 1000
+
         background: Rectangle {
             implicitWidth: 200
             implicitHeight: 8
@@ -167,7 +165,6 @@ Button {
                         color: "#0076ca"
                     }
                 }
-                // Bo tròn tương tự background
 
             }
         }
@@ -196,8 +193,7 @@ Button {
             id: tempValue
             anchors.right: parent.right
             anchors.top: parent.top
-//            text: qsTr("45°C")
-            text: cpuModel.cpuTemp + "°C"
+            text: cpuModel.cpuTemp.toFixed(1) + "°C"
             color: "black"
             font.bold: true
             font.family: "Times New Roman"
@@ -229,7 +225,7 @@ Button {
             id: clockValue
             anchors.right: parent.right
             anchors.top: parent.top
-            text: qsTr("4,5GHz")
+            text: cpuModel.cpuClock + "MHz"
             color: "black"
             font.bold: true
             font.family: "Times New Roman"

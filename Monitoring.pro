@@ -20,6 +20,8 @@ SOURCES += \
 RESOURCES += qml.qrc \
     icon.qrc
 
+LIBS += -lstatgrab
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -32,6 +34,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES +=
+# Thiết lập thư mục output
+DESTDIR = $$PWD/Gen
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.rcc
+UI_DIR = $$DESTDIR/.ui
+
+# Tạo thư mục Gen nếu chưa tồn tại
+!exists($$DESTDIR) {
+    system(mkdir -p $$DESTDIR)
+}
 
 HEADERS += \
     Model/cpumodel.h
