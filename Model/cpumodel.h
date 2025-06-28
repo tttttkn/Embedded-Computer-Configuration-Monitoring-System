@@ -11,11 +11,14 @@
 #include <statgrab.h>
 #include <cpufreq.h>
 
+#define MAX_DATA_POINTS 20 // Số điểm dữ liệu tối đa cho biểu đồ
+
 class CpuModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(float cpuTemp READ cpuTemp NOTIFY cpuTempChanged)
-    Q_PROPERTY(float cpuUsage READ cpuUsage NOTIFY cpuUsageChanged)
+    Q_PROPERTY(QVariantList cpuUsage READ cpuUsage NOTIFY cpuUsageChanged)
+    Q_PROPERTY(float lastCpuUsage READ lastCpuUsage NOTIFY lastCpuUsageChanged)
     Q_PROPERTY(float cpuClock READ cpuClock NOTIFY cpuClockChanged)
     Q_PROPERTY(int totalProcesses READ totalProcesses NOTIFY totalProcessesChanged)
     Q_PROPERTY(int totalThreads READ totalThreads NOTIFY totalThreadsChanged)
@@ -24,7 +27,7 @@ public:
     explicit CpuModel(QObject *parent = nullptr);
     ~CpuModel();
 
-    float getCurrentCpuUsage() const;
+    float getCpuUsage() const;
     float getCpuTemperature() const;
     float getCpuClock() const;
     int getTotalProcesses() const;
@@ -33,7 +36,8 @@ public:
 
 
     float cpuTemp() const;
-    float cpuUsage() const;
+    QVariantList cpuUsage() const;
+    float lastCpuUsage() const;
     float cpuClock() const;
     int totalProcesses() const;
     int totalThreads() const;
@@ -41,6 +45,7 @@ public:
 signals:
     void cpuTempChanged();
     void cpuUsageChanged();
+    void lastCpuUsageChanged();
     void cpuClockChanged();
     void totalProcessesChanged();
     void totalThreadsChanged();
@@ -53,7 +58,7 @@ public slots:
     void updateTotalThreads();
 
 private:
-    float m_cpuUsage{0.0F};
+    QVariantList m_cpuUsage{};
     float m_cpuTemp{0.0F};
     float m_cpuClock{0.0F};
     int m_totalProcesses{0};

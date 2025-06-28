@@ -24,9 +24,17 @@ float CpuModel::cpuTemp() const
     return m_cpuTemp;
 }
 
-float CpuModel::cpuUsage() const
+QVariantList CpuModel::cpuUsage() const
 {
     return m_cpuUsage;
+}
+
+float CpuModel::lastCpuUsage() const
+{
+    if (m_cpuUsage.isEmpty()) {
+        return 0.0f;  // Trả về 0 nếu không có dữ liệu
+    }
+    return m_cpuUsage.last().toFloat();  // Trả về giá trị cuối cùng trong mảng dưới dạng float
 }
 
 float CpuModel::cpuClock() const
@@ -52,8 +60,15 @@ void CpuModel::updateCpuTemp()
 
 void CpuModel::updateCpuUsage()
 {
-    m_cpuUsage = getCurrentCpuUsage();
+    float newCpuUsage = getCpuUsage();
+    
+    m_cpuUsage.append(newCpuUsage);  // Append the latest usage to the vector
+    // Giới hạn số điểm dữ liệu
+    if (m_cpuUsage.size() > MAX_DATA_POINTS) {
+        m_cpuUsage.removeFirst();
+    }
     emit cpuUsageChanged();
+    emit lastCpuUsageChanged();  // Emit signal for the last CPU usage
 }
 
 void CpuModel::updateCpuClock()
@@ -76,7 +91,7 @@ void CpuModel::updateTotalThreads()
 
 
 
-float CpuModel::getCurrentCpuUsage() const
+float CpuModel::getCpuUsage() const
 {
     sg_cpu_percents* cpuStats = sg_get_cpu_percents(NULL);
     qDebug() << "CPU Usage (Total):" << cpuStats->user + cpuStats->kernel << "%";

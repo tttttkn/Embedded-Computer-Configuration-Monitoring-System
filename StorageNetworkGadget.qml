@@ -5,7 +5,6 @@ import QtQuick.Window 2.12
 import QtQuick.Shapes 1.12
 import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt version
 import QtQuick.Controls.Styles 1.4
-import QtCharts 2.3
 
 Button {
 //    id: hddnetButton

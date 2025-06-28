@@ -3,9 +3,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import QtQuick.Shapes 1.12
-import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt version
+import QtGraphicalEffects 1.0 
 import QtQuick.Controls.Styles 1.4
-//import QtCharts 2.5
 
 Item {
 
@@ -52,11 +51,18 @@ Rectangle {
                     border.color: "#00000000"
                 }
 
+                //Connections {
+                //    target: cpuModel
+                //    onCpuUsageChanged: {
+                //        cpuCanvas.requestPaint();
+                //    }
+                //}
+
                 Canvas {
                     id: cpuCanvas
 
                     // Danh sách lưu % CPU (0-100)
-                    property var cpuData: []
+                    //property var cpuModel.cpuUsage: cpuModel.cpuUsage
                     // Kích thước lưới
                     property int maxDataPoints: 20
                     property int gridStepX: (width-30) / maxDataPoints
@@ -70,27 +76,22 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    // Timer cập nhật dữ liệu
-                    Timer {
-                        interval: 500 // 0.5 giây
-                        running: true
-                        repeat: true
-                        onTriggered: {
-                            // Thêm dữ liệu ngẫu nhiên (0-100%)
-                            var newValue = Math.random() * 100;
-                            cpuCanvas.cpuData.push(newValue);
+                    //Timer {
+                    //    interval: 1000 // 0.5 giây
+                    //    running: true
+                    //    repeat: true
+                    //    onTriggered: {
+                    //        cpuCanvas.requestPaint();
+                    //    }
+                    //}
 
-                            // Giới hạn số điểm dữ liệu
-                            if (cpuCanvas.cpuData.length > cpuCanvas.maxDataPoints) {
-                                cpuCanvas.cpuData.shift();
-                            }
 
-                            // Yêu cầu vẽ lại
-                            cpuCanvas.requestPaint();
-                        }
+                    Connections {
+                        target: cpuModel
+                        onCpuUsageChanged: {
+                        cpuCanvas.requestPaint();
                     }
-
-                    // Vẽ biểu đồ
+                    }
                     onPaint: {
                         var ctx = getContext("2d");
                         ctx.reset();
@@ -99,17 +100,11 @@ Rectangle {
                         ctx.strokeStyle = "black";
                         ctx.lineWidth = 1;
 
-                        // Lưới ngang (10%, 20%,...)
                         for (var y = 0; y <= 100; y += 10) {
                             ctx.beginPath();
                             ctx.moveTo(0, height -10 - y * gridStepY);
                             ctx.lineTo(width - 30, height -10 - y * gridStepY);
                             ctx.stroke();
-
-                            // Nhãn trục Y
-//                            ctx.fillStyle = "black";
-//                            ctx.font = "10px Arial";
-//                            ctx.fillText(y + "%", width-20, height -10 - y * gridStepY + 3);
                         }
 
                         for (var y = 0; y <= 100; y += 100) {
@@ -125,14 +120,14 @@ Rectangle {
                         }
 
                         // Vẽ đường CPU
-                        if (cpuData.length > 0) {
+                        if (cpuModel.cpuUsage.length > 0) {
                             ctx.strokeStyle = "blue";
                             ctx.lineWidth = 2;
                             ctx.beginPath();
 
-                            for (var i = 0; i < cpuData.length; i++) {
+                            for (var i = 0; i < cpuModel.cpuUsage.length; i++) {
                                 var x = i * gridStepX;
-                                var y = height - 10 - cpuData[i] * gridStepY;
+                                var y = height - 10 - cpuModel.cpuUsage[i] * gridStepY;
 
                                 if (i === 0) {
                                     ctx.moveTo(x, y);
@@ -148,67 +143,6 @@ Rectangle {
                     }
                         }
             }
-
-//            GroupBox {
-//                id: groupBox
-//                height: 150
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-//                padding: 0
-//                rightPadding: 0
-//                bottomPadding: 0
-//                leftPadding: 0
-//                topPadding: 0
-//                Layout.fillWidth: true
-//                ChartView {
-//                    id: chart
-//                    height: 200
-//                    anchors.fill: parent
-////                    Layout.fillWidth: true
-////                    Layout.fillHeight: true
-//                    titleColor: "#00000000"
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-//                    Layout.fillWidth: true
-//                        theme: ChartView.ChartThemeDark
-//                        antialiasing: true
-//                        legend.visible: false
-
-//                        ValueAxis {
-//                            id: axisX
-
-//                            titleText: "Time (s)"
-//                        }
-
-//                        ValueAxis {
-//                            id: axisY
-//                            min: 0
-//                            max: 100
-//                            titleFont.pointSize: 5
-//                            titleText: "CPU Usage (%)"
-//                        }
-
-//                        LineSeries {
-//                            id: cpuSeries
-//                            name: "CPU Usage"
-//                            axisX: axisX
-//                            axisY: axisY
-//                        }
-
-//                        Timer {
-//                            interval: 1000
-//                            running: true
-//                            repeat: true
-//                            onTriggered: {
-//                                var cpuUsage = CpuReader.getUsage()  // C++ function
-//                                cpuSeries.append(xValue++, cpuUsage)
-//                                if (xValue > axisX.max) {
-//                                    axisX.min += 1
-//                                    axisX.max += 1
-//                                }
-//                            }
-//                        }
-//                }
-
-//}
 
 
             // Speed Section
@@ -244,7 +178,7 @@ Rectangle {
                         Layout.fillHeight: false
 
                         Label { color: "black"; text: "Utilization:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label { text: cpuModel.cpuUsage.toFixed(1) + "%"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
+                        Label { text: cpuModel.lastCpuUsage.toFixed(1) + "%"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
 
                         Label { color: "black";text: "Clock:"; font.pointSize: 10;font.family: "Times New Roman" }
                         Label { color: "black";text: cpuModel.cpuClock.toFixed(0) + "MHz"; font.pointSize: 10; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }

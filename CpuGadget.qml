@@ -41,7 +41,7 @@ Button {
     ProgressCircle {
         id: progress1
         lineWidth: 10
-        value: cpuModel.cpuUsage / 100
+        value: cpuModel.lastCpuUsage / 100
 
         size: 80
         secondaryColor: "#585252"
