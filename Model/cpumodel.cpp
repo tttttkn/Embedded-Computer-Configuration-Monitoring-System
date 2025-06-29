@@ -7,10 +7,16 @@ CpuModel::CpuModel(QObject *parent) : QObject(parent)
     connect(&m_timer, &QTimer::timeout, this, &CpuModel::updateCpuClock);
     connect(&m_timer, &QTimer::timeout, this, &CpuModel::updateTotalProcesses);
     connect(&m_timer, &QTimer::timeout, this, &CpuModel::updateTotalThreads);
-    m_timer.start(1000); 
-
+    m_timer.start(5000); 
 
     sg_init(1);
+
+    //Init
+    updateCpuTemp();
+    updateCpuUsage();
+    updateCpuClock();
+    updateTotalProcesses();
+    updateTotalThreads();
 
 }
 

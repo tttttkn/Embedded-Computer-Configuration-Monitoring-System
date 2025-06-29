@@ -15,6 +15,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         Model/cpumodel.cpp \
+        Model/memorymodel.cpp \
+        Model/networkmodel.cpp \
+        Model/storagemodel.cpp \
+        Model/gpumodel.cpp \
         main.cpp
 
 RESOURCES += qml.qrc \
@@ -47,4 +51,8 @@ UI_DIR = $$DESTDIR/.ui
 }
 
 HEADERS += \
-    Model/cpumodel.h
+    Model/cpumodel.h \
+    Model/memorymodel.h \
+    Model/networkmodel.h \
+    Model/gpumodel.h \
+    Model/storagemodel.h
