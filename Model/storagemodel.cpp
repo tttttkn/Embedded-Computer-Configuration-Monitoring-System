@@ -5,6 +5,7 @@ StorageModel::StorageModel(QObject *parent) : QObject(parent)
 {
     connect(&m_timer, &QTimer::timeout, this, &StorageModel::updateStorageInfo);
     m_timer.start(5000);
+    
     // Initialize storage info
     updateStorageInfo();
 }

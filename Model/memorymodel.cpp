@@ -3,30 +3,17 @@
 
 MemoryModel::MemoryModel(QObject *parent) : QObject(parent)
 {
-    connect(&m_timer, &QTimer::timeout, this, &MemoryModel::updateMemoryInfo);
-    m_timer.start(5000); 
-    updateMemoryInfo();
+
 }
 
-QVariantMap MemoryModel::memoryInfo() const
-{
-    return m_memoryInfo;
-}
 
-void MemoryModel::updateMemoryInfo()
-{
-    getMemoryInfo();
-    emit memoryInfoChanged();
-}
-
-void MemoryModel::getMemoryInfo() {
+void MemoryModel::updateMemoryInfo() {
 
     struct sysinfo info;
     if (sysinfo(&info) == -1) {
         perror("Lỗi sysinfo");
         return;
     }
-    // Convert to MB
     m_memoryInfo["usedMemory"] = (info.totalram - info.freeram) / 1024.0 / 1024.0;
     m_memoryInfo["availableMemory"] = info.freeram / 1024.0 / 1024.0;
     m_memoryInfo["ramUsage"] = (m_memoryInfo["usedMemory"].toFloat() / (info.totalram / 1024.0 / 1024.0)) * 100.0;
@@ -45,8 +32,4 @@ void MemoryModel::getMemoryInfo() {
     qDebug() << "Available Swap:" << m_memoryInfo["swapAvailable"].toFloat() << "MB";
     qDebug() << "Swap Usage:" << m_memoryInfo["swapUsage"].toFloat() << "%";
     qDebug() << "----------------------------------";
-
-
-
-
 }

@@ -7,7 +7,6 @@ import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt versio
 import QtQuick.Controls.Styles 1.4
 
 Button {
-//    id: hddnetButton
     y: 121
     width: 115
     height: 117
@@ -134,7 +133,7 @@ Button {
             id: element2
             x: 24
             y: 3
-            text: qsTr("80.0")
+            text: modelController.networkInfo.uploadSpeed.toFixed(1)
             font.pixelSize: 12
         }
     }
@@ -154,7 +153,7 @@ Button {
             id: element3
             x: 23
             y: 3
-            text: qsTr("80.0")
+            text: modelController.networkInfo.downloadSpeed.toFixed(1)
             font.pixelSize: 12
         }
     }

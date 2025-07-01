@@ -25,7 +25,6 @@ Rectangle {
             spacing: 5
 
 
-            // CPU Model Header
             Rectangle {
                 id: rectangle
                 Layout.fillWidth: true
@@ -57,35 +56,26 @@ Rectangle {
                     property int maxDataPoints: 20
                     property int gridStepX: (width-30) / maxDataPoints
 
-                    property int gridStepY: (height - 20) / 100
+                    property int gridStepY: (height - 20) / 5
                     x: 50
                     y: 25
                     width: 200
                     height: 120
                     anchors.verticalCenterOffset: 0
                     anchors.horizontalCenterOffset: 0
-                    contextType: qsTr("")
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    // Timer cập nhật dữ liệu
-                    Timer {
-                        interval: 500 // 0.5 giây
-                        running: true
-                        repeat: true
-                        onTriggered: {
-                            // Thêm dữ liệu ngẫu nhiên (0-100%)
-                            var newValue = Math.random() * 100;
-                            var newValue1 = Math.random() * 100;
-                            cpuCanvas.receiveSpeedData.push(newValue);
-                            cpuCanvas.sendSpeedData.push(newValue1);
+                    Connections {
+                        target: modelController
+                        onNetworkInfoChanged: {
+                            cpuCanvas.receiveSpeedData.push(modelController.networkInfo.downloadSpeed);
+                            cpuCanvas.sendSpeedData.push(modelController.networkInfo.uploadSpeed);
                             // Giới hạn số điểm dữ liệu
                             if (cpuCanvas.receiveSpeedData.length > cpuCanvas.maxDataPoints) {
                                 cpuCanvas.receiveSpeedData.shift();
                                 cpuCanvas.sendSpeedData.shift();
-                            }
-
-                            // Yêu cầu vẽ lại
+                            } 
                             cpuCanvas.requestPaint();
                         }
                     }
@@ -99,29 +89,21 @@ Rectangle {
                         ctx.strokeStyle = "black";
                         ctx.lineWidth = 1;
 
-                        // Lưới ngang (10%, 20%,...)
-                        for (var y = 0; y <= 100; y += 10) {
+                        for (var y = 0; y <= 5; y += 1) {
                             ctx.beginPath();
                             ctx.moveTo(0, height -10 - y * gridStepY);
                             ctx.lineTo(width - 30, height -10 - y * gridStepY);
                             ctx.stroke();
 
-                            // Nhãn trục Y
-//                            ctx.fillStyle = "black";
-//                            ctx.font = "10px Arial";
-//                            ctx.fillText(y + "%", width-20, height -10 - y * gridStepY + 3);
+
                         }
 
-                        for (var y = 0; y <= 100; y += 100) {
+                        for (var y = 0; y <= 5; y += 5) {
                             ctx.beginPath();
-//                            ctx.moveTo(0, height -10 - y * gridStepY);
-//                            ctx.moveTo(width - 30, height -10 - y * gridStepY);
-
-
                             // Nhãn trục Y
                             ctx.fillStyle = "black";
                             ctx.font = "10px Arial bold";
-                            ctx.fillText(y + "Kbps", width-30, height -10 - y * gridStepY + 3);
+                            ctx.fillText(y + "Mbps", width-30, height -10 - y * gridStepY + 3);
                         }
 
                         // Vẽ đường
@@ -182,19 +164,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                 Layout.fillWidth: true
                 // Processes Section
-                GroupBox {
-                    GridLayout {
-                        columns: 2
-                        columnSpacing: 2
-                        rowSpacing: 2
 
-                        Label {color: "red"; text: "Send:";font.family: "Times New Roman" }
-                        Label {color: "red"; text: "239 Kbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
-
-                        Label {color: "blue"; text: "Receive:" ;font.family: "Times New Roman" }
-                        Label {color: "blue"; text: "3711 Kbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
-                    }
-                }
                 GroupBox
                 {
                     GridLayout {
@@ -205,13 +175,27 @@ Rectangle {
                         Layout.fillHeight: false
 
                         Label { color: "black"; text: "SSID:";font.family: "Times New Roman" }
-                        Label { text: "Tan Tai Kieu"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
+                        Label { text: modelController.networkInfo.ssid; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
 
                         Label { color: "black";text: "IPv4:";font.family: "Times New Roman" }
-                        Label { color: "black";text: "191.168.2.23"; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
+                        Label { color: "black";text: modelController.networkInfo.ipv4; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
 
                         Label { color: "black";text: "Band:";font.family: "Times New Roman" }
-                        Label {color: "black"; text: "2.4 GHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: modelController.networkInfo.wifiBand + "GHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                    }
+                }
+
+                GroupBox {
+                    GridLayout {
+                        columns: 2
+                        columnSpacing: 2
+                        rowSpacing: 2
+
+                        Label {color: "red"; text: "Send:";font.family: "Times New Roman" }
+                        Label {color: "red"; text: modelController.networkInfo.uploadSpeed.toFixed(1) + "Kbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+
+                        Label {color: "blue"; text: "Receive:" ;font.family: "Times New Roman" }
+                        Label {color: "blue"; text: modelController.networkInfo.downloadSpeed.toFixed(1) + "Kbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                     }
                 }
 

@@ -14,6 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        Controllers/navigationcontroller.cpp \
+        Controllers/modelcontroller.cpp \
         Model/cpumodel.cpp \
         Model/memorymodel.cpp \
         Model/networkmodel.cpp \
@@ -51,6 +53,8 @@ UI_DIR = $$DESTDIR/.ui
 }
 
 HEADERS += \
+    Controllers/navigationcontroller.h \
+    Controllers/modelcontroller.h \
     Model/cpumodel.h \
     Model/memorymodel.h \
     Model/networkmodel.h \

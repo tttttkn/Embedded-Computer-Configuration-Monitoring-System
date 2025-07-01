@@ -2,36 +2,26 @@
 
 NetworkModel::NetworkModel(QObject *parent) : QObject(parent)
 {
-    connect(&m_timer, &QTimer::timeout, this, &NetworkModel::updateNetworkInfo);
-    m_timer.start(5000);
-    updateNetworkInfo();
 }
 
 
-QVariantMap NetworkModel::networkInfo() const
+QVariantMap NetworkModel::getNetworkInfo() const
 {
     return m_networkInfo;
 }
 
-void NetworkModel::updateNetworkInfo()
-{
-    getNetworkInfo();
-    emit networkInfoChanged();
-}
 
-void NetworkModel::getNetworkInfo()
+void NetworkModel::updateNetworkInfo()
 {
     QNetworkConfigurationManager manager;
 
-    // Lấy cấu hình mạng đang hoạt động
     foreach (const QNetworkConfiguration &config, manager.allConfigurations()) {
         if (config.state() == QNetworkConfiguration::Active) {
-            m_networkInfo["ssid"] = config.name(); // SSID (nếu là WiFi)
+            m_networkInfo["ssid"] = config.name(); 
             break;
         }
     }
 
-    // Lấy IPv4 từ giao diện mạng
     foreach (const QNetworkInterface &interface, QNetworkInterface::allInterfaces()) {
         if (interface.flags() & QNetworkInterface::IsUp &&
             !(interface.flags() & QNetworkInterface::IsLoopBack)) {
@@ -45,7 +35,7 @@ void NetworkModel::getNetworkInfo()
         }
     }
 
-    m_networkInfo["wifiBand"] = getWifiBand(); // Lấy băng tần WiFi
+    m_networkInfo["wifiBand"] = getWifiBand(); 
     m_networkInfo["macAddress"] = QNetworkInterface::interfaceFromName(m_networkInfo.value("interface").toString()).hardwareAddress();
 
     updateNetworkSpeed();
@@ -71,7 +61,7 @@ QString NetworkModel::getWifiBand() {
     } else if (output.contains("Frequency:5")) {
         return "5";
     }
-    return "Unknown";
+    return "TBD";
 }
 
 void NetworkModel::updateNetworkSpeed()
@@ -85,7 +75,6 @@ void NetworkModel::updateNetworkSpeed()
     QString content = file.readAll();
     file.close();
 
-    // Tìm dòng chứa wlan0 hoặc enp0s3
     QStringList lines = content.split('\n');
     for (const QString &line : lines) {
         if (line.contains("wlan0") || line.contains("enp0s3")) {
@@ -94,10 +83,9 @@ void NetworkModel::updateNetworkSpeed()
                 float bytesReceived = parts[1].toFloat();
                 float bytesTransmitted = parts[9].toFloat();
 
-                // Tính tốc độ (KB/s)
                 if (m_lastBytesReceived > 0) {
-                    m_networkInfo["downloadSpeed"] = (bytesReceived - m_lastBytesReceived) / 1024.0;
-                    m_networkInfo["uploadSpeed"] = (bytesTransmitted - m_lastBytesTransmitted) / 1024.0;
+                    m_networkInfo["downloadSpeed"] = (bytesReceived - m_lastBytesReceived) / 1024.0 / 1024.0;
+                    m_networkInfo["uploadSpeed"] = (bytesTransmitted - m_lastBytesTransmitted) / 1024.0 / 1024.0;
 
                 m_lastBytesReceived = bytesReceived;
                 m_lastBytesTransmitted = bytesTransmitted;

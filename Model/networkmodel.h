@@ -14,24 +14,22 @@ class NetworkModel : public QObject
 {
  Q_OBJECT
 
-    Q_PROPERTY(QVariantMap networkInfo READ networkInfo NOTIFY networkInfoChanged)
 
 public:
     explicit NetworkModel(QObject *parent = nullptr);
 
-    void getNetworkInfo();
+    QVariantMap getNetworkInfo() const;
+
+    void updateNetworkInfo();
     QString getWifiBand();
     void updateNetworkSpeed();
 
     
     
-    QVariantMap networkInfo() const;
 signals:
-    void networkInfoChanged();
 
 public slots:
 
-    void updateNetworkInfo();
 
 private:
     float m_lastBytesReceived;

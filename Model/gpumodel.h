@@ -11,18 +11,17 @@ class GPUModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QVariantMap gpuInfo READ gpuInfo NOTIFY gpuInfoChanged)
 
 public:
     explicit GPUModel(QObject *parent = nullptr);
 
-    QVariantMap gpuInfo() const;
+    void updateGpuInfo();
+
+    QVariantMap getGpuInfo() const { return m_gpuInfo; }
 
 signals:
-    void gpuInfoChanged();
 
 public slots:
-    void updateGpuInfo();
 
 private:
     QVariantMap m_gpuInfo;

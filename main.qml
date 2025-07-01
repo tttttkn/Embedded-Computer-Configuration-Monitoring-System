@@ -47,6 +47,15 @@ Window {
 
 
     }
+
+        Connections {
+            target: navigator
+            onViewChanged: {
+                stackView.push(targetUrl)
+            }
+        }
+
+
 }
 
 

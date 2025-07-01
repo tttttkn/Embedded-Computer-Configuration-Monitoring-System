@@ -6,7 +6,7 @@ import QtQuick.Shapes 1.12
 import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt version
 
 Button {
-//    id: cpuButton
+    
     anchors.left: parent.left
     anchors.leftMargin: 2
     anchors.topMargin: 2
@@ -41,17 +41,11 @@ Button {
     ProgressCircle {
         id: progress1
         lineWidth: 10
-        value: cpuModel.lastCpuUsage / 100
+        value: modelController.lastCpuUsage / 100
 
         size: 80
         secondaryColor: "#585252"
         primaryColor: "#0787c1"
-
-//        ColorAnimation {
-//            from: "white"
-//            to: "red"
-//            duration: 200
-//        }
         anchors.verticalCenter: parent.top
         anchors.verticalCenterOffset: parent.height * (3/5)
         
@@ -71,7 +65,7 @@ Button {
         y: 45
         width: 50  
         height: 8       
-        value: cpuModel.cpuTemp / 100
+        value: modelController.cpuTemp / 100
 
         Behavior on value {
             NumberAnimation {
@@ -132,7 +126,7 @@ Button {
             }
         }
 
-        value: cpuModel.cpuClock / 1000
+        value: modelController.cpuClock / 1000
 
         background: Rectangle {
             implicitWidth: 200
@@ -193,7 +187,7 @@ Button {
             id: tempValue
             anchors.right: parent.right
             anchors.top: parent.top
-            text: cpuModel.cpuTemp.toFixed(1) + "°C"
+            text: modelController.cpuTemp.toFixed(1) + "°C"
             color: "black"
             font.bold: true
             font.family: "Times New Roman"
@@ -225,7 +219,7 @@ Button {
             id: clockValue
             anchors.right: parent.right
             anchors.top: parent.top
-            text: cpuModel.cpuClock + "MHz"
+            text: modelController.cpuClock + "MHz"
             color: "black"
             font.bold: true
             font.family: "Times New Roman"

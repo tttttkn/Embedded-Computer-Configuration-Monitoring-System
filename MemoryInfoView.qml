@@ -55,7 +55,7 @@ Rectangle {
                         id: progress1
                             y: -50
                             lineWidth: 10
-                            value: 0.7
+                            value: modelController.memoryInfo.ramUsage / 100
                             size: 125
                             secondaryColor: "#585252"
                             primaryColor: "#0787c1"
@@ -95,10 +95,6 @@ Rectangle {
                         topPadding: 12
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                         Layout.fillWidth: true
-//                        background: Rectangle {
-//                            border.width: 0
-//                            color: "transparent"
-//                        }
 
                         ColumnLayout {
 
@@ -113,7 +109,7 @@ Rectangle {
                                     Layout.alignment: Qt.AlignLeft }
                                 Label {
                                     color: "black";
-                                    text: "0.0 GB";
+                                    text: modelController.memoryInfo.usedMemory.toFixed(1);
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     font.pointSize: 9;
                                     font.bold: true; font.family: "Times New Roman"; }
@@ -122,7 +118,7 @@ Rectangle {
 
                             RowLayout {
                                 Label {color: "black"; text: "Available:"; font.pointSize: 9;font.family: "Times New Roman" }
-                                Label {color: "black"; text: "15.7 GB"; font.pointSize: 9; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                                Label {color: "black"; text: modelController.memoryInfo.availableMemory.toFixed(1); font.pointSize: 9; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                             }
                         }
 
@@ -143,7 +139,7 @@ Rectangle {
                         anchors.fill: parent
                         RowLayout {
                             Label {color: "black"; text: "Swap:"; font.pointSize: 9;font.family: "Times New Roman" }
-                            Label {color: "black"; text: "10%"; font.pointSize: 9; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                            Label {color: "black"; text: modelController.memoryInfo.swapUsage.toFixed(1); font.pointSize: 9; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                         }
                         RowLayout {
                             Label {
@@ -154,7 +150,7 @@ Rectangle {
                                 Layout.alignment: Qt.AlignLeft }
                             Label {
                                 color: "black";
-                                text: "0.0 GB";
+                                text: modelController.memoryInfo.swapUsed.toFixed(1);
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 font.pointSize: 9;
                                 font.bold: true; font.family: "Times New Roman"; }
@@ -163,7 +159,7 @@ Rectangle {
 
                         RowLayout {
                             Label {color: "black"; text: "Available:"; font.pointSize: 9;font.family: "Times New Roman" }
-                            Label {color: "black"; text: "15.7 GB"; font.pointSize: 9; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                            Label {color: "black"; text: modelController.memoryInfo.swapAvailable.toFixed(1); font.pointSize: 9; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                         }
                     }
 

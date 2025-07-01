@@ -11,25 +11,24 @@ class MemoryModel : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QVariantMap memoryInfo READ memoryInfo NOTIFY memoryInfoChanged)
 
 public:
     explicit MemoryModel(QObject *parent = nullptr);
 
-    void getMemoryInfo();
-
-    
-    
-    QVariantMap memoryInfo() const;
-signals:
-    void memoryInfoChanged();
-
-public slots:
+    QVariantMap getMemoryInfo() const { return m_memoryInfo; }
 
     void updateMemoryInfo();
 
+    
+    
+signals:
+
+public slots:
+
+
 private:
     QVariantMap m_memoryInfo;
+
     QTimer m_timer;
 
 };

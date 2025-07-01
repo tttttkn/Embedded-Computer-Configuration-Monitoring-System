@@ -39,7 +39,7 @@ Button {
     ProgressCircle {
         id: progress1
         lineWidth: 10
-        value: memoryModel.memoryInfo.ramUsage / 100
+        value: modelController.memoryInfo.ramUsage / 100
         size: 80
         secondaryColor: "#585252"
         primaryColor: "#0787c1"

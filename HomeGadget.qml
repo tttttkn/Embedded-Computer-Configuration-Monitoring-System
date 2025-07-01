@@ -6,27 +6,29 @@ import QtQuick.Controls 2.12
 
 
     Rectangle {
-//        id: homeScreen
+        id: homeScreen
         anchors.fill: parent
         color: "transparent"
+
+
         CpuGadget {
-            onClicked: stackView.push("CpuInfoView.qml")
+            onClicked: navigator.requestViewChange("HomeGadget.qml", "CpuInfoView.qml")
         }
 
         GpuGadget {
             id: gpuButton
-            onClicked: stackView.push("GpuInfoView.qml")
+            onClicked: navigator.requestViewChange("HomeGadget.qml", "GpuInfoView.qml")
         }
 
         MemoryGadget {
             id: ramButton
             width: 80
-            onClicked: stackView.push("MemoryInfoView.qml")
+            onClicked: navigator.requestViewChange("HomeGadget.qml", "MemoryInfoView.qml")
         }
 
         StorageNetworkGadget {
             id: hddnetButton
-            onClicked: stackView.push("NetworkInfoView.qml")
+            onClicked: navigator.requestViewChange("HomeGadget.qml", "NetworkInfoView.qml")
         }
 
         DateTimeGadget {

@@ -16,46 +16,32 @@
 class CpuModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(float cpuTemp READ cpuTemp NOTIFY cpuTempChanged)
-    Q_PROPERTY(QVariantList cpuUsage READ cpuUsage NOTIFY cpuUsageChanged)
-    Q_PROPERTY(float lastCpuUsage READ lastCpuUsage NOTIFY lastCpuUsageChanged)
-    Q_PROPERTY(float cpuClock READ cpuClock NOTIFY cpuClockChanged)
-    Q_PROPERTY(int totalProcesses READ totalProcesses NOTIFY totalProcessesChanged)
-    Q_PROPERTY(int totalThreads READ totalThreads NOTIFY totalThreadsChanged)
+
 
 public:
     explicit CpuModel(QObject *parent = nullptr);
     ~CpuModel();
 
-    float getCpuUsage() const;
-    float getCpuTemperature() const;
-    float getCpuClock() const;
-    int getTotalProcesses() const;
-    int getTotalThreads() const;
-
-
-
-    float cpuTemp() const;
-    QVariantList cpuUsage() const;
-    float lastCpuUsage() const;
-    float cpuClock() const;
-    int totalProcesses() const;
-    int totalThreads() const;
-
-signals:
-    void cpuTempChanged();
-    void cpuUsageChanged();
-    void lastCpuUsageChanged();
-    void cpuClockChanged();
-    void totalProcessesChanged();
-    void totalThreadsChanged();
-
-public slots:
-    void updateCpuTemp();
     void updateCpuUsage();
+    void updateCpuTemperature();
     void updateCpuClock();
     void updateTotalProcesses();
     void updateTotalThreads();
+
+    QVariantList getCpuUsage() const { return m_cpuUsage; }
+    float getCpuTemperature() const { return m_cpuTemp; }
+    float getCpuClock() const { return m_cpuClock; }
+    int getTotalProcesses() const { return m_totalProcesses; }
+    int getTotalThreads() const { return m_totalThreads; }
+
+
+
+
+
+signals:
+
+
+
 
 private:
     QVariantList m_cpuUsage{};
@@ -63,7 +49,6 @@ private:
     float m_cpuClock{0.0F};
     int m_totalProcesses{0};
     int m_totalThreads{0};
-    QTimer m_timer;
 
 
 

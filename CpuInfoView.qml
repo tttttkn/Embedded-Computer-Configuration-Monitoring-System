@@ -51,18 +51,10 @@ Rectangle {
                     border.color: "#00000000"
                 }
 
-                //Connections {
-                //    target: cpuModel
-                //    onCpuUsageChanged: {
-                //        cpuCanvas.requestPaint();
-                //    }
-                //}
-
                 Canvas {
                     id: cpuCanvas
 
                     // Danh sách lưu % CPU (0-100)
-                    //property var cpuModel.cpuUsage: cpuModel.cpuUsage
                     // Kích thước lưới
                     property int maxDataPoints: 20
                     property int gridStepX: (width-30) / maxDataPoints
@@ -76,18 +68,8 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    //Timer {
-                    //    interval: 1000 // 0.5 giây
-                    //    running: true
-                    //    repeat: true
-                    //    onTriggered: {
-                    //        cpuCanvas.requestPaint();
-                    //    }
-                    //}
-
-
                     Connections {
-                        target: cpuModel
+                        target: modelController
                         onCpuUsageChanged: {
                         cpuCanvas.requestPaint();
                     }
@@ -120,14 +102,14 @@ Rectangle {
                         }
 
                         // Vẽ đường CPU
-                        if (cpuModel.cpuUsage.length > 0) {
+                        if (modelController.cpuUsage.length > 0) {
                             ctx.strokeStyle = "blue";
                             ctx.lineWidth = 2;
                             ctx.beginPath();
 
-                            for (var i = 0; i < cpuModel.cpuUsage.length; i++) {
+                            for (var i = 0; i < modelController.cpuUsage.length; i++) {
                                 var x = i * gridStepX;
-                                var y = height - 10 - cpuModel.cpuUsage[i] * gridStepY;
+                                var y = height - 10 - modelController.cpuUsage[i] * gridStepY;
 
                                 if (i === 0) {
                                     ctx.moveTo(x, y);
@@ -158,10 +140,10 @@ Rectangle {
                         rowSpacing: 2
 
                         Label {color: "black"; text: "Processes:" ; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: cpuModel.totalProcesses; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: modelController.totalProcesses; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
 
                         Label {color: "black"; text: "Threads:" ; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: cpuModel.totalThreads; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: modelController.totalThreads; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
 
                         Label {color: "black"; text: "Cores:" ; font.pointSize: 10;font.family: "Times New Roman" }
                         Label {color: "black"; text: "1"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
@@ -178,13 +160,13 @@ Rectangle {
                         Layout.fillHeight: false
 
                         Label { color: "black"; text: "Utilization:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label { text: cpuModel.lastCpuUsage.toFixed(1) + "%"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
+                        Label { text: modelController.lastCpuUsage.toFixed(1) + "%"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
 
                         Label { color: "black";text: "Clock:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label { color: "black";text: cpuModel.cpuClock.toFixed(0) + "MHz"; font.pointSize: 10; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
+                        Label { color: "black";text: modelController.cpuClock.toFixed(0) + "MHz"; font.pointSize: 10; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
 
                         Label { color: "black";text: "Temp:"; font.pointSize: 10;font.family: "Times New Roman" }
-                        Label {color: "black"; text: cpuModel.cpuTemp.toFixed(1) + "°C"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: modelController.cpuTemp.toFixed(1) + "°C"; font.pointSize: 10; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
                     }
                 }
 

@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import QtQuick.Shapes 1.12
-import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt version
+import QtGraphicalEffects 1.0
 
 Rectangle {
 //    id: menuBar
@@ -93,15 +93,11 @@ Rectangle {
             }
             
             onClicked: {
-//                stackView.replace("homePage.qml")
-//                stackView.pop(null);
-                if (stackView.currentItem !== "homePage.qml")
-                {
-                    stackView.pop(null);
+                    console.log("Back to Home Menu")
+                    stackView.pop();
                 }
 
-//                stackView.pop(stackView.get(0));
             }
         }
-    }
+    
 }
