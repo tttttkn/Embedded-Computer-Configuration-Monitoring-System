@@ -2,10 +2,7 @@
 
 GPUModel::GPUModel(QObject *parent) : QObject(parent)
 {
-    m_timer.start(5000); 
 
-    //init
-    updateGpuInfo();
 }
 
 
@@ -18,16 +15,60 @@ QString GPUModel::runCommand(const QString &cmd)
     return process.readAllStandardOutput().trimmed();
 }
 
+float GPUModel::convertMemToFloat(const QString &str) {
+
+    if (!str.isEmpty()) {
+        // Loại bỏ "gpu=" và "M"
+        QString numberStr = str.split('=')[1].replace("M", ""); 
+        // Chuyển thành số nguyên
+        float number{0};
+        number = numberStr.toFloat();
+
+        return number;  // Trả về 76
+    }
+
+    return -1;  // Nếu lỗi
+}
+
+float GPUModel::convertTempToFloat(const QString &str) {
+
+    if (!str.isEmpty()) {
+        // Loại bỏ "gpu=" và "M"
+        QString numberStr = str.split('=')[1].replace("'C", ""); 
+        // Chuyển thành số nguyên
+        float number{0};
+        number = numberStr.toFloat();
+
+        return number;  // Trả về 76
+    }
+
+    return -1;  // Nếu lỗi
+}
+
+float GPUModel::convertFreqToFloat(const QString &str) {
+
+    if (!str.isEmpty()) {
+        QString numberStr = str.split('=')[1]; 
+        float number{0};
+        number = numberStr.toFloat();
+
+        return number;  
+    }
+
+    return -1;  // Nếu lỗi
+}
+
 void GPUModel::updateGpuInfo()
 {
-    QVariantMap newInfo;
+    QVariantMap gpuInfo;
 
-    newInfo["gpuMemory"] = runCommand("vcgencmd get_mem gpu");
-    newInfo["cpuMemory"] = runCommand("vcgencmd get_mem arm");
-    newInfo["temperature"] = runCommand("vcgencmd measure_temp");
-    newInfo["clockSpeed"] = runCommand("vcgencmd measure_clock v3d");
+    gpuInfo["gpuMemory"] =convertMemToFloat(runCommand("vcgencmd get_mem gpu"));
+    // gpuInfo["cpuMemory"] = convertMemToFloat(runCommand("vcgencmd get_mem arm"));
+    gpuInfo["temperature"] = convertTempToFloat(runCommand("vcgencmd measure_temp"));
+    gpuInfo["clockSpeedMax"] = convertFreqToFloat(runCommand("vcgencmd get_config core_freq"));
+    gpuInfo["clockSpeed"] = convertFreqToFloat(runCommand("vcgencmd get_config gpu_freq"));
 
-    m_gpuInfo = newInfo;
+    m_gpuInfo = gpuInfo;
 
     qDebug() << "----------------------------------";
     qDebug() << "GPU Info:";

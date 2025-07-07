@@ -39,7 +39,7 @@ Button {
     ProgressCircle {
         id: progress1
         lineWidth: 10
-        value: 0.9
+        value: modelController.gpuInfo.clockSpeed / modelController.gpuInfo.clockSpeedMax
         size: 80
         secondaryColor: "#585252"
         primaryColor: "#0787c1"
@@ -66,19 +66,19 @@ Button {
         id: control
         x: 82
         y: 45
-        width: 50  // Rộng hơn để đẹp hơn
-        height: 8    // Chiều cao mỏng, hiện đại
+        width: 50  
+        height: 8   
 
-        value: 0.5   // Giá trị tiến trình
+        value: modelController.gpuInfo.temperature / 100   
 
 
 
         background: Rectangle {
             implicitWidth: 200
             implicitHeight: 8
-            color: "#555a61"       // Màu nền sáng hơn
-            radius: height/2        // Bo tròn hoàn toàn
-            border.color: "#000000" // Viền nhẹ
+            color: "#555a61"      
+            radius: height/2        
+            border.color: "#000000" 
             border.width: 1
 
 
@@ -115,17 +115,17 @@ Button {
         id: control1
         x: 82
         y: 70
-        width: 50  // Rộng hơn để đẹp hơn
-        height: 8    // Chiều cao mỏng, hiện đại
+        width: 50  
+        height: 8  
 
-        value: 0.5   // Giá trị tiến trình
+        value: modelController.gpuInfo.clockSpeed / modelController.gpuInfo.clockSpeedMax
 
         background: Rectangle {
             implicitWidth: 200
             implicitHeight: 8
-            color: "#555a61"       // Màu nền sáng hơn
-            radius: height/2        // Bo tròn hoàn toàn
-            border.color: "#000000" // Viền nhẹ
+            color: "#555a61"     
+            radius: height/2    
+            border.color: "#000000" 
             border.width: 1
 
 
@@ -183,7 +183,7 @@ Button {
             id: tempValue
             anchors.right: parent.right
             anchors.top: parent.top
-            text: qsTr("45°C")
+            text: modelController.gpuInfo.temperature.toFixed(0) + qsTr("°C")
             color: "black"
             font.bold: true
             font.family: "Times New Roman"
@@ -204,7 +204,7 @@ Button {
             id: clockText
             anchors.left: parent.left
             anchors.top: parent.top
-            text: qsTr("MEM")
+            text: qsTr("Clock")
             color: "black"
             font.bold: true
             font.family: "Times New Roman"
@@ -215,7 +215,7 @@ Button {
             id: clockValue
             anchors.right: parent.right
             anchors.top: parent.top
-            text: qsTr("4,5 GB")
+            text: modelController.gpuInfo.clockSpeed + qsTr("Mhz")
             color: "black"
             font.bold: true
             font.family: "Times New Roman"

@@ -68,7 +68,7 @@ Button {
         //            text: qsTr("09/06/2025")
         anchors.right: parent.right
         anchors.rightMargin: 10
-        font.pixelSize: 13
+        font.pixelSize: 12
     }
     
     Text {

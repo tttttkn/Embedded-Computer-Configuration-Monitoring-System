@@ -25,7 +25,6 @@ Rectangle {
             spacing: 5
 
 
-            // CPU Model Header
             Rectangle {
                 id: rectangle
                 Layout.fillWidth: true
@@ -53,7 +52,7 @@ Rectangle {
                     id: cpuCanvas
 
                     // Danh sách lưu % CPU (0-100)
-                    property var cpuData: []
+                    property var gpuData: []
                     // Kích thước lưới
                     property int maxDataPoints: 20
                     property int gridStepX: (width-30) / maxDataPoints
@@ -75,11 +74,11 @@ Rectangle {
                         onTriggered: {
                             // Thêm dữ liệu ngẫu nhiên (0-100%)
                             var newValue = Math.random() * 100;
-                            cpuCanvas.cpuData.push(newValue);
+                            cpuCanvas.gpuData.push(newValue);
 
                             // Giới hạn số điểm dữ liệu
-                            if (cpuCanvas.cpuData.length > cpuCanvas.maxDataPoints) {
-                                cpuCanvas.cpuData.shift();
+                            if (cpuCanvas.gpuData.length > cpuCanvas.maxDataPoints) {
+                                cpuCanvas.gpuData.shift();
                             }
 
                             // Yêu cầu vẽ lại
@@ -122,14 +121,14 @@ Rectangle {
                         }
 
                         // Vẽ đường CPU
-                        if (cpuData.length > 0) {
+                        if (gpuData.length > 0) {
                             ctx.strokeStyle = "blue";
                             ctx.lineWidth = 2;
                             ctx.beginPath();
 
-                            for (var i = 0; i < cpuData.length; i++) {
+                            for (var i = 0; i < gpuData.length; i++) {
                                 var x = i * gridStepX;
-                                var y = height - 10 - cpuData[i] * gridStepY;
+                                var y = height - 10 - gpuData[i] * gridStepY;
 
                                 if (i === 0) {
                                     ctx.moveTo(x, y);
@@ -143,9 +142,9 @@ Rectangle {
 
                         // Vẽ điểm dữ liệu
 //                        ctx.fillStyle = "red";
-//                        for (var j = 0; j < cpuData.length; j++) {
+//                        for (var j = 0; j < gpuData.length; j++) {
 //                            var pointX = j * gridStepX;
-//                            var pointY = height -10 - cpuData[j] * gridStepY;
+//                            var pointY = height -10 - gpuData[j] * gridStepY;
 //                            ctx.beginPath();
 //                            ctx.arc(pointX, pointY, 3, 0, Math.PI * 2);
 //                            ctx.fill();
@@ -166,11 +165,11 @@ Rectangle {
 //                        columnSpacing: 2
                         spacing: 1
 
-                        Label {color: "black"; text: "GPU Memmory:" ;font.family: "Times New Roman";Layout.alignment: Qt.AlignLeft }
-                        Label {color: "black"; text: "0.0/21.7 GB"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: "GPU Memmory:" ;font.family: "Times New Roman";Layout.alignment: Qt.AlignLeft;font.pixelSize: 12 }
+                        Label {color: "black"; text:  modelController.gpuInfo.gpuMemory.toFixed(0) + "MB"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12 }
 
-                        Label {color: "black"; text: "Shared GPU memory:";font.family: "Times New Roman" }
-                        Label {color: "black"; text: "0.0/15.7 GB"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "black"; text: "Clock:";font.family: "Times New Roman";font.pixelSize: 12 }
+                        Label {color: "black"; text: modelController.gpuInfo.clockSpeed.toFixed(0) + "MHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12 }
                     }
                 }
                 GroupBox
@@ -182,11 +181,11 @@ Rectangle {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.fillHeight: false
 
-                        Label { color: "black"; text: "Utilization:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft}
-                        Label { text: "90%"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight}
+                        Label { color: "black"; text: "Utilization:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft;font.pixelSize: 12}
+                        Label { text: (modelController.gpuInfo.clockSpeed / modelController.gpuInfo.clockSpeedMax) * 100 + "%"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12}
 
-                        Label { color: "black"; text: "Temp:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft}
-                        Label { text: "90°C"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight}
+                        Label { color: "black"; text: "Temp:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft;font.pixelSize: 12}
+                        Label { text: modelController.gpuInfo.temperature.toFixed(1) + "°C"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12}
                     }
                 }
 

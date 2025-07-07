@@ -41,7 +41,7 @@ Button {
         width: 87  // Rộng hơn để đẹp hơn
         height: 8
         anchors.horizontalCenter: parent.horizontalCenter    // Chiều cao mỏng, hiện đại
-        value: 1   // Giá trị tiến trình
+        value: 0.7   // Giá trị tiến trình
         
         
         
@@ -76,9 +76,7 @@ Button {
                         color: "#0076ca"
                     }
                 }
-                // Bo tròn tương tự background
                 
-                // Gradient màu
                 
                 
             }
@@ -109,15 +107,6 @@ Button {
         font.pixelSize: 12
     }
     
-    Text {
-        id: element1
-        x: 81
-        y: 50
-        text: qsTr("40°C")
-        anchors.right: control.right
-        anchors.rightMargin: 0
-        font.pixelSize: 12
-    }
     
     Image {
         id: image

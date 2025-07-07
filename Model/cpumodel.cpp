@@ -26,10 +26,10 @@ void CpuModel::updateCpuUsage()
 
 void CpuModel::updateCpuTemperature() 
 {
-    // QFile tempFile("/sys/class/thermal/thermal_zone0/temp");
+    QFile tempFile("/sys/class/thermal/thermal_zone0/temp");
 
-    QString appDir = QCoreApplication::applicationDirPath();
-    QFile tempFile(appDir + "/temp");
+    // QString appDir = QCoreApplication::applicationDirPath();
+    // QFile tempFile(appDir + "/temp");
     if (!tempFile.open(QIODevice::ReadOnly)) {
         qDebug() << "Cannot open temperature file";
         return;
@@ -43,10 +43,10 @@ void CpuModel::updateCpuTemperature()
 
 void CpuModel::updateCpuClock() 
 {
-    // QFile file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
+    QFile file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
 
-    QString appDir = QCoreApplication::applicationDirPath();
-    QFile file(appDir + "/scaling_cur_freq");
+    // QString appDir = QCoreApplication::applicationDirPath();
+    // QFile file(appDir + "/scaling_cur_freq");
 
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Cannot open CPU frequency file:" << file.errorString();

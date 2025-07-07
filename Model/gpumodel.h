@@ -6,7 +6,9 @@
 #include <QVariantMap>
 #include <QProcess>
 #include <QDebug>
-
+#include <sys/sysinfo.h>
+#include <QQuickItem>
+#include <QFile>
 class GPUModel : public QObject
 {
     Q_OBJECT
@@ -25,7 +27,9 @@ public slots:
 
 private:
     QVariantMap m_gpuInfo;
-    QTimer m_timer;
+    float convertMemToFloat(const QString &str);
+    float convertTempToFloat(const QString &str);
+    float convertFreqToFloat(const QString &str);
 
     QString runCommand(const QString &cmd);
 };
