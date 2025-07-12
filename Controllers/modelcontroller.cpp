@@ -6,11 +6,16 @@ ModelController::ModelController(QObject *parent) : QObject(parent)
     connect(&m_timer, &QTimer::timeout, this, &ModelController::updateGpuInfo);
     connect(&m_timer, &QTimer::timeout, this, &ModelController::updateMemoryInfo);
     connect(&m_timer, &QTimer::timeout, this, &ModelController::updateNetworkInfo);
+    connect(&m_timer, &QTimer::timeout, this, &ModelController::updateStorageInfo);
     m_timer.start(1000);
 
 
     //Init
-    updateCpuInfo();
+    updateCpuInfo(); 
+    updateGpuInfo();
+    updateMemoryInfo();
+    updateNetworkInfo();
+    updateStorageInfo();
 }
 
 ModelController::~ModelController()
@@ -100,4 +105,15 @@ void ModelController::updateNetworkInfo()
 {
     networkModel.updateNetworkInfo();
     emit networkInfoChanged();
+}
+
+QVariantMap ModelController::storageInfo() const
+{
+    return storageModel.getStorageInfo();
+}
+
+void ModelController::updateStorageInfo()
+{
+    storageModel.updateStorageInfo();
+    emit storageInfoChanged();
 }

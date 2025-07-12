@@ -1,4 +1,5 @@
 #include "cpumodel.h"
+#include <QDir>
 
 CpuModel::CpuModel(QObject *parent) : QObject(parent)
 {
@@ -64,23 +65,45 @@ void CpuModel::updateCpuClock()
 
 void CpuModel::updateTotalProcesses() 
 {
-    QProcess process;
-    process.start("ps", {"-e", "--no-headers"});
-    process.waitForFinished();
-    
-    QString output = process.readAllStandardOutput();
-    qDebug() << "Total Processes Output:" << output.count('\n') + 1;
-    m_totalProcesses = output.count('\n') + 1;
+
+    QDir procDir("/proc");
+    QStringList processDirs = procDir.entryList(QDir::Dirs);
+
+    int count = 0;
+    for (const QString &dir : processDirs) {
+        bool isPid;
+        dir.toInt(&isPid);
+        if (isPid) {
+            count++;
+        }
+    }
+    m_totalProcesses = count;
 }
 
 void CpuModel::updateTotalThreads() 
 {
-    QProcess process;
-    process.start("ps", {"-eL", "--no-headers"});
-    process.waitForFinished();
-    
-    QString output = process.readAllStandardOutput();
-    qDebug() << "Total Threads Output:" << output.count('\n');
-    m_totalThreads = output.count('\n');
+    QDir procDir("/proc");
+    QStringList processDirs = procDir.entryList(QDir::Dirs);
+
+    int totalThreads = 0;
+    for (const QString &dir : processDirs) {
+        bool isPid;
+        dir.toInt(&isPid);
+        if (!isPid) continue;
+
+        QFile statusFile("/proc/" + dir + "/status");
+        if (statusFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream in(&statusFile);
+            while (true) {
+                QString line = in.readLine();
+                if (line.startsWith("Threads:")) {
+                    totalThreads += line.split("\t").last().toInt();
+                    break;
+                }
+            }
+            statusFile.close();
+        }
+    }
+    m_totalThreads = totalThreads;
 }
 

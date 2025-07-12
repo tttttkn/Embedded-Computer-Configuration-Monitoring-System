@@ -10,16 +10,13 @@
 class StorageModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantMap storageInfo READ storageInfo NOTIFY storageInfoChanged)
 
 public:
     explicit StorageModel(QObject *parent = nullptr);
 
-    QVariantMap getStorageInfo();
+    QVariantMap getStorageInfo() const;
 
-    QVariantMap storageInfo() const;
 signals:
-    void storageInfoChanged();
 
 public slots:
 
@@ -27,7 +24,6 @@ public slots:
 
 private:
     QVariantMap m_storageInfo;
-    QTimer m_timer;
 
 };
 

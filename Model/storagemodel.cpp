@@ -3,45 +3,39 @@
 
 StorageModel::StorageModel(QObject *parent) : QObject(parent)
 {
-    connect(&m_timer, &QTimer::timeout, this, &StorageModel::updateStorageInfo);
-    m_timer.start(5000);
-    
-    // Initialize storage info
-    updateStorageInfo();
 }
 
 
-QVariantMap StorageModel::storageInfo() const
+QVariantMap StorageModel::getStorageInfo() const
 {
     return m_storageInfo;
 }
 
-void StorageModel::updateStorageInfo()
-{
-    m_storageInfo = getStorageInfo();
-    emit storageInfoChanged();
-}
 
-QVariantMap StorageModel::getStorageInfo()
+void StorageModel::updateStorageInfo()
 {
     QVariantMap info;
 
     qDebug() << "----------------------------------";
     qDebug() << "Storage Device Info:";
     
-    foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) 
-    {
-        QByteArray device = storage.device();
-        if (device.contains("sda") || device.contains("sdb")) {
-            qDebug() << "Device:" << storage.device();
-            qDebug() << "Mount point:" << storage.rootPath();
-            qDebug() << "Total size:" << storage.bytesTotal()/1024/1024 << "MB";
-            qDebug() << "Available:" << storage.bytesAvailable()/1024/1024 << "MB";
-            qDebug() << "Usage:" << (1.0 - (double)storage.bytesAvailable()/storage.bytesTotal()) * 100 << "%";
-            qDebug() << "File system:" << storage.fileSystemType();
-            qDebug() << "----------------------------------";
-        }
+    QStorageInfo root = QStorageInfo::root();
+
+    if (!root.isValid() || !root.isReady()) {
+        qWarning() << "Không thể đọc thông tin phân vùng root!";
+        return;
     }
-    return info;
+
+    qint64 usedBytes = root.bytesTotal() - root.bytesFree();
+    qint64 totalBytes = root.bytesTotal();
+
+    double usedMB = usedBytes / (1024.0 * 1024);
+    double totalMB = totalBytes / (1024.0 * 1024);
+
+    info["usedMB"] = usedMB;
+    info["totalMB"] = totalMB;
+    info["freeMB"] = root.bytesFree() / (1024.0 * 1024);
+
+    m_storageInfo = info;
 }
 

@@ -25,6 +25,8 @@ class ModelController : public QObject
     Q_PROPERTY(QVariantMap memoryInfo READ memoryInfo NOTIFY memoryInfoChanged)
 
     Q_PROPERTY(QVariantMap networkInfo READ networkInfo NOTIFY networkInfoChanged)
+
+    Q_PROPERTY(QVariantMap storageInfo READ storageInfo NOTIFY storageInfoChanged)
     
 
 public:
@@ -44,6 +46,8 @@ public:
 
     QVariantMap networkInfo() const;
 
+    QVariantMap storageInfo() const;
+
 
 
 
@@ -61,6 +65,8 @@ signals:
 
     void networkInfoChanged();
 
+    void storageInfoChanged();
+
 
 
 
@@ -72,6 +78,8 @@ public slots:
     void updateMemoryInfo();
 
     void updateNetworkInfo();
+
+    void updateStorageInfo();
 
 private:
     CpuModel cpuModel;

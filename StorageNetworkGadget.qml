@@ -40,8 +40,8 @@ Button {
         y: 38
         width: 87  // Rộng hơn để đẹp hơn
         height: 8
-        anchors.horizontalCenter: parent.horizontalCenter    // Chiều cao mỏng, hiện đại
-        value: 0.7   // Giá trị tiến trình
+        anchors.horizontalCenter: parent.horizontalCenter   
+        value: modelController.storageInfo.usedMB / modelController.storageInfo.totalMB  
         
         
         
@@ -101,9 +101,9 @@ Button {
     Text {
         id: hddUsage
         y: 50
-        text: Math.round(control.value * 100) + "%"
+        text: Math.round(control.value * 100) + "%" + " Free:" + modelController.storageInfo.freeMB.toFixed(0) + "MB"
         anchors.left: control.left
-        anchors.leftMargin: 0
+        anchors.leftMargin: -2
         font.pixelSize: 12
     }
     
