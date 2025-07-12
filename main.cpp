@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     ModelController modelController;
     NavigationController navigator;
+
+
     engine.rootContext()->setContextProperty("navigator", &navigator);
     engine.rootContext()->setContextProperty("modelController", &modelController);
     const QUrl url(QStringLiteral("qrc:/main.qml"));

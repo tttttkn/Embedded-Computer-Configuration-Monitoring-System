@@ -9,6 +9,8 @@
 #include <Model/storagemodel.h>
 #include <Model/gpumodel.h>
 
+#include "Service/cpuservice.h"
+
 class ModelController : public QObject
 {
     Q_OBJECT
@@ -48,7 +50,9 @@ public:
 
     QVariantMap storageInfo() const;
 
-
+    CpuService m_cpuService;
+    QThread cpuThread;
+    CpuModel cpuModel;
 
 
 signals:
@@ -82,14 +86,13 @@ public slots:
     void updateStorageInfo();
 
 private:
-    CpuModel cpuModel;
     MemoryModel memoryModel;
     NetworkModel networkModel;
     StorageModel storageModel;
     GPUModel gpuModel;
     QTimer m_timer;
 
-    
+
 
 
 };

@@ -2,6 +2,12 @@
 
 ModelController::ModelController(QObject *parent) : QObject(parent)
 {
+
+    connect(&m_cpuService, &CpuService::cpuInfoUpdated, &cpuModel, &CpuModel::updateCpuInfo);
+    m_cpuService.moveToThread(&cpuThread);
+    cpuThread.start();
+    QMetaObject::invokeMethod(&m_cpuService, "startMonitoring", Qt::QueuedConnection);
+
     connect(&m_timer, &QTimer::timeout, this, &ModelController::updateCpuInfo);
     connect(&m_timer, &QTimer::timeout, this, &ModelController::updateGpuInfo);
     connect(&m_timer, &QTimer::timeout, this, &ModelController::updateMemoryInfo);
@@ -20,6 +26,10 @@ ModelController::ModelController(QObject *parent) : QObject(parent)
 
 ModelController::~ModelController()
 {
+    QMetaObject::invokeMethod(&m_cpuService, "stopMonitoring", Qt::QueuedConnection);
+    cpuThread.requestInterruption();
+    cpuThread.quit();
+    cpuThread.wait();
 }
 
 
@@ -57,20 +67,20 @@ int ModelController::totalThreads() const
 
 void ModelController::updateCpuInfo()
 {
-    cpuModel.updateCpuUsage();
+    // cpuModel.updateCpuUsage();
     emit cpuUsageChanged();
     emit lastCpuUsageChanged();
 
-    cpuModel.updateCpuTemperature();
+    // cpuModel.updateCpuTemperature();
     emit cpuTempChanged();
 
-    cpuModel.updateCpuClock();
+    // cpuModel.updateCpuClock();
     emit cpuClockChanged();
     
-    cpuModel.updateTotalProcesses();
+    // cpuModel.updateTotalProcesses();
     emit totalProcessesChanged();
     
-    cpuModel.updateTotalThreads();
+    // cpuModel.updateTotalThreads();
     emit totalThreadsChanged();
 }
 

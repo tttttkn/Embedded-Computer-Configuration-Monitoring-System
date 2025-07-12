@@ -21,6 +21,7 @@ SOURCES += \
         Model/networkmodel.cpp \
         Model/storagemodel.cpp \
         Model/gpumodel.cpp \
+        Service/cpuservice.cpp \
         main.cpp
 
 RESOURCES += qml.qrc \
@@ -42,6 +43,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 HEADERS += \
+    Service/cpuservice.h \
+    Service/i_cpuservice.h \
     Controllers/navigationcontroller.h \
     Controllers/modelcontroller.h \
     Model/cpumodel.h \

@@ -5,13 +5,8 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QTimer>
-#include <QDebug>
-#include <QProcess>
+#include "Service/cpuservice.h"
 
-#include <statgrab.h>
-#include <cpufreq.h>
-
-#define MAX_DATA_POINTS 20 // Số điểm dữ liệu tối đa cho biểu đồ
 
 class CpuModel : public QObject
 {
@@ -22,11 +17,8 @@ public:
     explicit CpuModel(QObject *parent = nullptr);
     ~CpuModel();
 
-    void updateCpuUsage();
-    void updateCpuTemperature();
-    void updateCpuClock();
-    void updateTotalProcesses();
-    void updateTotalThreads();
+
+
 
     QVariantList getCpuUsage() const { return m_cpuUsage; }
     float getCpuTemperature() const { return m_cpuTemp; }
@@ -35,6 +27,8 @@ public:
     int getTotalThreads() const { return m_totalThreads; }
 
 
+public slots:
+    void updateCpuInfo(CpuService::CpuInfo info);
 
 
 
