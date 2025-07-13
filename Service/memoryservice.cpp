@@ -7,7 +7,7 @@ void MemoryService::updateMemoryInfo()
 {
     struct sysinfo info;
     if (sysinfo(&info) == -1) {
-        qWarning() << "Lỗi sysinfo";
+        qWarning() << "error sysinfo";
         return;
     }
     m_memoryInfo.usedMemory = (info.totalram - info.freeram) / 1024.0 / 1024.0;
@@ -21,7 +21,7 @@ void MemoryService::updateMemoryInfo()
 void MemoryService::startMonitoring()
 {
     m_isMonitoring = true;
-    qDebug() << "Starting Memory monitoring...";
+    // qDebug() << "Starting Memory monitoring...";
     while (m_isMonitoring) {
         updateMemoryInfo();
         emit memoryInfoUpdated(m_memoryInfo);
@@ -32,5 +32,5 @@ void MemoryService::startMonitoring()
 void MemoryService::stopMonitoring()
 {
     m_isMonitoring = false;
-    qDebug() << "Memory monitoring stopped.";
+    // qDebug() << "Memory monitoring stopped.";
 }

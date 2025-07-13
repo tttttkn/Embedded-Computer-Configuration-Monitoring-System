@@ -53,12 +53,12 @@ void GpuService::startMonitoring()
     m_isMonitoring = true;
     m_gpuInfo.clockSpeedMax = convertFreqToFloat(runCommand("vcgencmd get_config core_freq"));
 
-    qDebug() << "Starting GPU monitoring...";
+    // qDebug() << "Starting GPU monitoring...";
     while (m_isMonitoring) {
         updateGpuInfo();
         emit gpuInfoUpdated(m_gpuInfo);
-        qDebug() << "GPU Info Updated:" << m_gpuInfo.gpuMemory << "MB" << m_gpuInfo.temperature << "°C" 
-                 << m_gpuInfo.clockSpeedMax << "MHz" << m_gpuInfo.clockSpeed << "MHz";
+        // qDebug() << "GPU Info Updated:" << m_gpuInfo.gpuMemory << "MB" << m_gpuInfo.temperature << "°C" 
+        //          << m_gpuInfo.clockSpeedMax << "MHz" << m_gpuInfo.clockSpeed << "MHz";
         QThread::sleep(1);
     }
 }
@@ -66,5 +66,5 @@ void GpuService::startMonitoring()
 void GpuService::stopMonitoring()
 {
     m_isMonitoring = false;
-    qDebug() << "GPU monitoring stopped.";
+    // qDebug() << "GPU monitoring stopped.";
 }

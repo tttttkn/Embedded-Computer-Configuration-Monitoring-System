@@ -25,6 +25,7 @@ public:
     QVariantMap getGpuInfo() const { return m_gpuInfo; }
     
     signals:
+    void gpuInfoUpdated();
     
     public slots:
     void updateGpuInfo(const GpuInfo &info);

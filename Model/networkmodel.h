@@ -15,7 +15,7 @@ public:
     QVariantMap getNetworkInfo() const { return m_networkInfo; }
 
 signals:
-
+    void networkInfoUpdated();
 public slots:
     void updateNetworkInfo(const NetworkInfo &info);
 

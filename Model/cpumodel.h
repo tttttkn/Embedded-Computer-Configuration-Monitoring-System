@@ -34,7 +34,7 @@ public slots:
 
 signals:
 
-
+    void cpuInfoUpdated();
 
 
 private:

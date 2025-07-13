@@ -15,7 +15,7 @@ public:
     QVariantMap getMemoryInfo() const { return m_memoryInfo; }
 
 signals:
-
+    void memoryInfoUpdated();
 public slots:
     void updateMemoryInfo(const MemoryInfo &info);
 

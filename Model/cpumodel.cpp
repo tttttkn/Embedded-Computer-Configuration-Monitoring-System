@@ -15,7 +15,7 @@ void CpuModel::updateCpuInfo(const CpuInfo &info)
     m_cpuClock = info.cpuClock;
     m_totalProcesses = info.totalProcesses;
     m_totalThreads = info.totalThreads;
-
+    emit cpuInfoUpdated();
 }
 
 

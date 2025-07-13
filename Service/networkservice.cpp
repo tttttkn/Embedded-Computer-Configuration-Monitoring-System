@@ -82,7 +82,7 @@ void NetworkService::updateNetworkSpeed(const QString &interfaceName)
 void NetworkService::startMonitoring()
 {
     m_isMonitoring = true;
-    qDebug() << "Starting Network monitoring...";
+    // qDebug() << "Starting Network monitoring...";
     while (m_isMonitoring) {
         updateNetworkInfo();
         emit networkInfoUpdated(m_networkInfo);
@@ -93,5 +93,5 @@ void NetworkService::startMonitoring()
 void NetworkService::stopMonitoring()
 {
     m_isMonitoring = false;
-    qDebug() << "Network monitoring stopped.";
+    // qDebug() << "Network monitoring stopped.";
 }

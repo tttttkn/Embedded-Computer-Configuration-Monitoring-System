@@ -22,7 +22,7 @@ void StorageService::updateStorageInfo()
 void StorageService::startMonitoring()
 {
     m_isMonitoring = true;
-    qDebug() << "Starting Storage monitoring...";
+    // qDebug() << "Starting Storage monitoring...";
     while (m_isMonitoring) {
         updateStorageInfo();
         emit storageInfoUpdated(m_storageInfo);
@@ -33,5 +33,5 @@ void StorageService::startMonitoring()
 void StorageService::stopMonitoring()
 {
     m_isMonitoring = false;
-    qDebug() << "Storage monitoring stopped.";
+    // qDebug() << "Storage monitoring stopped.";
 }

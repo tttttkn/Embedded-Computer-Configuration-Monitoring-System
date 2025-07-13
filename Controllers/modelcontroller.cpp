@@ -2,16 +2,6 @@
 
 ModelController::ModelController(QObject *parent) : QObject(parent)
 {
-
-
-    // connect(&m_timer, &QTimer::timeout, this, &ModelController::updateCpuInfo);
-    // connect(&m_timer, &QTimer::timeout, this, &ModelController::updateGpuInfo);
-    // connect(&m_timer, &QTimer::timeout, this, &ModelController::updateMemoryInfo);
-    // connect(&m_timer, &QTimer::timeout, this, &ModelController::updateNetworkInfo);
-    connect(&m_timer, &QTimer::timeout, this, &ModelController::updateStorageInfo);
-    m_timer.start(1000);
-
-
     //Init
     updateCpuInfo(); 
     updateGpuInfo();
@@ -34,40 +24,40 @@ ModelController::~ModelController()
     networkThread.quit();
     networkThread.wait();
 
-    // storageThread.quit();
-    // storageThread.wait();
+    storageThread.quit();
+    storageThread.wait();
 }
 
 void ModelController::initServices()
 {
     m_cpuService.moveToThread(&cpuThread);
     connect(&m_cpuService, &CpuService::cpuInfoUpdated, &cpuModel, &CpuModel::updateCpuInfo);
-    connect(&m_cpuService, &CpuService::cpuInfoUpdated, this, &ModelController::updateCpuInfo);
+    connect(&cpuModel, &CpuModel::cpuInfoUpdated, this, &ModelController::updateCpuInfo);
     cpuThread.start();
     QMetaObject::invokeMethod(&m_cpuService, "startMonitoring", Qt::QueuedConnection);
 
 
     m_gpuService.moveToThread(&gpuThread);
     connect(&m_gpuService, &GpuService::gpuInfoUpdated, &gpuModel, &GPUModel::updateGpuInfo);
-    connect(&m_gpuService, &GpuService::gpuInfoUpdated, this, &ModelController::updateGpuInfo);
+    connect(&gpuModel, &GPUModel::gpuInfoUpdated, this, &ModelController::updateGpuInfo);
     gpuThread.start();
     QMetaObject::invokeMethod(&m_gpuService, "startMonitoring", Qt::QueuedConnection);
 
     m_memoryService.moveToThread(&memoryThread);
     connect(&m_memoryService, &MemoryService::memoryInfoUpdated, &memoryModel, &MemoryModel::updateMemoryInfo);
-    connect(&m_memoryService, &MemoryService::memoryInfoUpdated, this, &ModelController::updateMemoryInfo);
+    connect(&memoryModel, &MemoryModel::memoryInfoUpdated, this, &ModelController::updateMemoryInfo);
     memoryThread.start();
     QMetaObject::invokeMethod(&m_memoryService, "startMonitoring", Qt::QueuedConnection);
 
     m_networkService.moveToThread(&networkThread);
     connect(&m_networkService, &NetworkService::networkInfoUpdated, &networkModel, &NetworkModel::updateNetworkInfo);
-    connect(&m_networkService, &NetworkService::networkInfoUpdated, this, &ModelController::updateNetworkInfo);
+    connect(&networkModel, &NetworkModel::networkInfoUpdated, this, &ModelController::updateNetworkInfo);
     networkThread.start();
     QMetaObject::invokeMethod(&m_networkService, "startMonitoring", Qt::QueuedConnection);
 
     m_storageService.moveToThread(&storageThread);
     connect(&m_storageService, &StorageService::storageInfoUpdated, &storageModel, &StorageModel::updateStorageInfo);
-    connect(&m_storageService, &StorageService::storageInfoUpdated, this, &ModelController::updateStorageInfo);
+    connect(&storageModel, &StorageModel::storageInfoUpdated, this, &ModelController::updateStorageInfo);
     storageThread.start();
     QMetaObject::invokeMethod(&m_storageService, "startMonitoring", Qt::QueuedConnection);
 }
@@ -78,12 +68,12 @@ float ModelController::cpuTemp() const
     return cpuModel.getCpuTemperature();
 }
 
-QVariantList ModelController::cpuUsage()
+QVariantList ModelController::cpuUsage() const
 {
     return cpuModel.getCpuUsage();
 }
 
-float ModelController::lastCpuUsage()
+float ModelController::lastCpuUsage() const
 {
     if (cpuModel.getCpuUsage().isEmpty()) {
         return 0.0f; 

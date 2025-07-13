@@ -13,4 +13,6 @@ void NetworkModel::updateNetworkInfo(const NetworkInfo &info)
     m_networkInfo["wifiBand"] = info.wifiBand;
     m_networkInfo["downloadSpeed"] = info.downloadSpeed;
     m_networkInfo["uploadSpeed"] = info.uploadSpeed;
+
+    emit networkInfoUpdated();
 }

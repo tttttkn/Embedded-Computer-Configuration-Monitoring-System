@@ -15,7 +15,8 @@ public:
     QVariantMap getStorageInfo() const { return m_storageInfo; }
 
 signals:
-
+    void storageInfoUpdated();
+    
 public slots:
     void updateStorageInfo(const StorageInfo &info);
 

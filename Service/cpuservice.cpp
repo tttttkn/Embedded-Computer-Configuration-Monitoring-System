@@ -14,7 +14,7 @@ void CpuService::updateCpuUsage()
     sg_init(1);
 
     sg_cpu_percents* cpuStats = sg_get_cpu_percents(NULL);
-    qDebug() << "CPU Usage (Total):" << cpuStats->user + cpuStats->kernel << "%";
+    // qDebug() << "CPU Usage (Total):" << cpuStats->user + cpuStats->kernel << "%";
 
     float totalUsage = cpuStats->user + cpuStats->kernel;
     totalUsage = qRound(totalUsage * 10) / 10.0f;
@@ -42,7 +42,7 @@ void CpuService::updateCpuTemperature()
     QTextStream in(&tempFile);
     QString tempStr = in.readLine();
     m_cpuInfo.cpuTemperature = tempStr.toInt(NULL) / 1000.0f;
-    qDebug() << "CPU Temperature:" << m_cpuInfo.cpuTemperature << "°C";
+    // qDebug() << "CPU Temperature:" << m_cpuInfo.cpuTemperature << "°C";
 }
 
 void CpuService::updateCpuClock() 
@@ -61,7 +61,7 @@ void CpuService::updateCpuClock()
     QString freqStr = in.readLine();
 
     float freq_khz = freqStr.toFloat(NULL);
-    qDebug() << "CPU Frequency:" << freq_khz / 1000.0f << "MHz";
+    // qDebug() << "CPU Frequency:" << freq_khz / 1000.0f << "MHz";
 
     m_cpuInfo.cpuClock = qRound(freq_khz / 1000.0f * 10) / 10.0f;
 }
@@ -113,7 +113,7 @@ void CpuService::updateTotalThreads()
 void CpuService::startMonitoring() 
 {
     m_isMonitoring = true;
-    qDebug() << "Starting CPU monitoring...";
+    // qDebug() << "Starting CPU monitoring...";
     while (m_isMonitoring) {
         updateCpuUsage();
         updateCpuTemperature();
@@ -121,7 +121,7 @@ void CpuService::startMonitoring()
         updateTotalProcesses();
         updateTotalThreads();
 
-        qDebug() << "CPU Info Updated:";
+        // qDebug() << "CPU Info Updated:";
         emit cpuInfoUpdated(m_cpuInfo);
 
         QThread::sleep(1); // Sleep for 1 second before the next update
@@ -132,6 +132,6 @@ void CpuService::startMonitoring()
 void CpuService::stopMonitoring() 
 {
     m_isMonitoring = false;
-    qDebug() << "CPU monitoring stopped.";
+    // qDebug() << "CPU monitoring stopped.";
 }
 

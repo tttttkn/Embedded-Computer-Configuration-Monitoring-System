@@ -40,8 +40,8 @@ public:
 
 
     float cpuTemp() const;
-    QVariantList cpuUsage();
-    float lastCpuUsage();
+    QVariantList cpuUsage() const;
+    float lastCpuUsage() const;
     float cpuClock() const;
     int totalProcesses() const;
     int totalThreads() const;

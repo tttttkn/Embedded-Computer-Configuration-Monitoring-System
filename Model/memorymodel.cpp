@@ -12,4 +12,6 @@ void MemoryModel::updateMemoryInfo(const MemoryInfo &info)
     m_memoryInfo["swapUsed"] = info.swapUsed;
     m_memoryInfo["swapAvailable"] = info.swapAvailable;
     m_memoryInfo["swapUsage"] = info.swapUsage;
+
+    emit memoryInfoUpdated();
 }
