@@ -6,6 +6,7 @@ CpuService::CpuService(QObject *parent) : QObject(parent)
 
 CpuService::~CpuService()
 {
+    stopMonitoring();
 }
 
 void CpuService::updateCpuUsage() 

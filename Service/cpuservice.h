@@ -10,25 +10,26 @@
 #include <statgrab.h>
 #include <cpufreq.h>
 
-#include "i_cpuservice.h"
 
 #define MAX_DATA_POINTS 20
 
+struct CpuInfo
+{
+    float cpuClock{};
+    int totalProcesses{};
+    int totalThreads{};
+    QVariantList cpuUsage{};
+    float cpuTemperature{};
+};
+Q_DECLARE_METATYPE(CpuInfo)
+
 class CpuService :  public QObject
-                    // public ICpuService
 {
     Q_OBJECT
 public:
     explicit CpuService(QObject *parent = nullptr);
     ~CpuService();
-    struct CpuInfo
-    {
-        float cpuClock{};
-        int totalProcesses{};
-        int totalThreads{};
-        QVariantList cpuUsage{};
-        float cpuTemperature{};
-    };
+
 
     void updateCpuUsage();
     void updateCpuTemperature();
@@ -41,7 +42,7 @@ public slots:
     void stopMonitoring();
 
 signals:
-    void cpuInfoUpdated(CpuService::CpuInfo info);
+    void cpuInfoUpdated(const CpuInfo &info);
 
 private:
     CpuInfo m_cpuInfo;

@@ -28,7 +28,7 @@ public:
 
 
 public slots:
-    void updateCpuInfo(CpuService::CpuInfo info);
+    void updateCpuInfo(const CpuInfo &info);
 
 
 

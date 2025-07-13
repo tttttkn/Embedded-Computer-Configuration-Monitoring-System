@@ -10,6 +10,7 @@
 #include <Model/gpumodel.h>
 
 #include "Service/cpuservice.h"
+#include "Service/gpuservice.h"
 
 class ModelController : public QObject
 {
@@ -35,6 +36,9 @@ public:
     explicit ModelController(QObject *parent = nullptr);
     ~ModelController();
 
+    void initServices();
+
+
     float cpuTemp() const;
     QVariantList cpuUsage();
     float lastCpuUsage();
@@ -50,9 +54,7 @@ public:
 
     QVariantMap storageInfo() const;
 
-    CpuService m_cpuService;
-    QThread cpuThread;
-    CpuModel cpuModel;
+
 
 
 signals:
@@ -86,14 +88,27 @@ public slots:
     void updateStorageInfo();
 
 private:
+    CpuModel cpuModel;
     MemoryModel memoryModel;
     NetworkModel networkModel;
     StorageModel storageModel;
     GPUModel gpuModel;
     QTimer m_timer;
 
+    CpuService m_cpuService;
+    QThread cpuThread;
 
+    GpuService m_gpuService;
+    QThread gpuThread;
 
+    MemoryService m_memoryService;
+    QThread memoryThread;
+
+    NetworkService m_networkService;
+    QThread networkThread;
+
+    StorageService m_storageService;
+    QThread storageThread;
 
 };
 

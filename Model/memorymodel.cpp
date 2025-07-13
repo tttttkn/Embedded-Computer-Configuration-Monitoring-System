@@ -1,35 +1,15 @@
 #include "memorymodel.h"
-#include <QStorageInfo>
 
 MemoryModel::MemoryModel(QObject *parent) : QObject(parent)
 {
-
 }
 
-
-void MemoryModel::updateMemoryInfo() {
-
-    struct sysinfo info;
-    if (sysinfo(&info) == -1) {
-        perror("Lỗi sysinfo");
-        return;
-    }
-    m_memoryInfo["usedMemory"] = (info.totalram - info.freeram) / 1024.0 / 1024.0;
-    m_memoryInfo["availableMemory"] = info.freeram / 1024.0 / 1024.0;
-    m_memoryInfo["ramUsage"] = (m_memoryInfo["usedMemory"].toFloat() / (info.totalram / 1024.0 / 1024.0)) * 100.0;
-    m_memoryInfo["swapUsed"] = (info.totalswap - info.freeswap) / 1024.0 / 1024.0;
-    m_memoryInfo["swapAvailable"] = info.freeswap / 1024.0 / 1024.0;
-    m_memoryInfo["swapUsage"] = (m_memoryInfo["swapUsed"].toFloat() / (info.totalswap / 1024.0 / 1024.0)) * 100.0;
-    
-    
-    // Debug output
-    qDebug() << "----------------------------------";
-    qDebug() << "Memory Info:";
-    qDebug() << "Used Memory:" << m_memoryInfo["usedMemory"].toFloat() << "MB";
-    qDebug() << "Available Memory:" << m_memoryInfo["availableMemory"].toFloat() << "MB";
-    qDebug() << "RAM Usage:" << m_memoryInfo["ramUsage"].toFloat() << "%";
-    qDebug() << "Used Swap:" << m_memoryInfo["swapUsed"].toFloat() << "MB";
-    qDebug() << "Available Swap:" << m_memoryInfo["swapAvailable"].toFloat() << "MB";
-    qDebug() << "Swap Usage:" << m_memoryInfo["swapUsage"].toFloat() << "%";
-    qDebug() << "----------------------------------";
+void MemoryModel::updateMemoryInfo(const MemoryInfo &info)
+{
+    m_memoryInfo["usedMemory"] = info.usedMemory;
+    m_memoryInfo["availableMemory"] = info.availableMemory;
+    m_memoryInfo["ramUsage"] = info.ramUsage;
+    m_memoryInfo["swapUsed"] = info.swapUsed;
+    m_memoryInfo["swapAvailable"] = info.swapAvailable;
+    m_memoryInfo["swapUsage"] = info.swapUsage;
 }

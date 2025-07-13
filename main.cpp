@@ -16,12 +16,17 @@ int main(int argc, char *argv[])
 
 //    QGuiApplication app(argc, argv);
     QApplication app(argc, argv);
+    qRegisterMetaType<CpuInfo>("CpuInfo");
+    qRegisterMetaType<GpuInfo>("GpuInfo");
+    qRegisterMetaType<MemoryInfo>("MemoryInfo");
+    qRegisterMetaType<NetworkInfo>("NetworkInfo");
+    qRegisterMetaType<StorageInfo>("StorageInfo");
 
     QQmlApplicationEngine engine;
     ModelController modelController;
     NavigationController navigator;
 
-
+    modelController.initServices();
     engine.rootContext()->setContextProperty("navigator", &navigator);
     engine.rootContext()->setContextProperty("modelController", &modelController);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
