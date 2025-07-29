@@ -47,7 +47,7 @@ Rectangle {
                 Layout.fillWidth: true
                 title: ""
                 Canvas {
-                    id: cpuCanvas
+                    id: networkCanvas
 
                     // Danh sách lưu % CPU (0-100)
                     property var receiveSpeedData: []
@@ -56,7 +56,7 @@ Rectangle {
                     property int maxDataPoints: 20
                     property int gridStepX: (width-30) / maxDataPoints
 
-                    property int gridStepY: (height - 20) / 5
+                    property int gridStepY: (height - 20) / 100
                     x: 50
                     y: 25
                     width: 200
@@ -69,14 +69,14 @@ Rectangle {
                     Connections {
                         target: modelController
                         onNetworkInfoChanged: {
-                            cpuCanvas.receiveSpeedData.push(modelController.networkInfo.downloadSpeed);
-                            cpuCanvas.sendSpeedData.push(modelController.networkInfo.uploadSpeed);
+                            networkCanvas.receiveSpeedData.push(modelController.networkInfo.downloadSpeed);
+                            networkCanvas.sendSpeedData.push(modelController.networkInfo.uploadSpeed);
                             // Giới hạn số điểm dữ liệu
-                            if (cpuCanvas.receiveSpeedData.length > cpuCanvas.maxDataPoints) {
-                                cpuCanvas.receiveSpeedData.shift();
-                                cpuCanvas.sendSpeedData.shift();
+                            if (networkCanvas.receiveSpeedData.length > networkCanvas.maxDataPoints) {
+                                networkCanvas.receiveSpeedData.shift();
+                                networkCanvas.sendSpeedData.shift();
                             } 
-                            cpuCanvas.requestPaint();
+                            networkCanvas.requestPaint();
                         }
                     }
 
@@ -89,7 +89,7 @@ Rectangle {
                         ctx.strokeStyle = "black";
                         ctx.lineWidth = 1;
 
-                        for (var y = 0; y <= 5; y += 1) {
+                        for (var y = 0; y <= 100; y += 10) {
                             ctx.beginPath();
                             ctx.moveTo(0, height -10 - y * gridStepY);
                             ctx.lineTo(width - 30, height -10 - y * gridStepY);
@@ -98,7 +98,7 @@ Rectangle {
 
                         }
 
-                        for (var y = 0; y <= 5; y += 5) {
+                        for (var y = 0; y <= 100; y += 100) {
                             ctx.beginPath();
                             // Nhãn trục Y
                             ctx.fillStyle = "black";
@@ -174,14 +174,14 @@ Rectangle {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.fillHeight: false
 
-                        Label { color: "black"; text: "SSID:";font.family: "Times New Roman" }
-                        Label { text: modelController.networkInfo.ssid; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter }
+                        Label { color: "black"; text: "SSID:";font.family: "Times New Roman";font.pointSize: 10 }
+                        Label { text: modelController.networkInfo.ssid; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight | Qt.AlignVCenter ;font.pointSize: 10}
 
-                        Label { color: "black";text: "IPv4:";font.family: "Times New Roman" }
-                        Label { color: "black";text: modelController.networkInfo.ipv4; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight }
+                        Label { color: "black";text: "IPv4:";font.family: "Times New Roman";font.pointSize: 10 }
+                        Label { color: "black";text: modelController.networkInfo.ipv4; font.family: "Times New Roman"; font.bold: true; Layout.alignment: Qt.AlignRight;font.pointSize: 10 }
 
-                        Label { color: "black";text: "Band:";font.family: "Times New Roman" }
-                        Label {color: "black"; text: modelController.networkInfo.wifiBand + "GHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label { color: "black";text: "Band:";font.family: "Times New Roman";font.pointSize: 10 }
+                        Label {color: "black"; text: modelController.networkInfo.wifiBand + "GHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10 }
                     }
                 }
 
@@ -191,11 +191,11 @@ Rectangle {
                         columnSpacing: 2
                         rowSpacing: 2
 
-                        Label {color: "red"; text: "Send:";font.family: "Times New Roman" }
-                        Label {color: "red"; text: modelController.networkInfo.uploadSpeed.toFixed(1) + "Kbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "red"; text: "Send:";font.family: "Times New Roman";font.pointSize: 10 }
+                        Label {color: "red"; text: modelController.networkInfo.uploadSpeed.toFixed(1) + "Mbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10 }
 
-                        Label {color: "blue"; text: "Receive:" ;font.family: "Times New Roman" }
-                        Label {color: "blue"; text: modelController.networkInfo.downloadSpeed.toFixed(1) + "Kbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight }
+                        Label {color: "blue"; text: "Receive:" ;font.family: "Times New Roman";font.pointSize: 10 }
+                        Label {color: "blue"; text: modelController.networkInfo.downloadSpeed.toFixed(1) + "Mbps"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10 }
                     }
                 }
 

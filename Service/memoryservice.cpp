@@ -16,6 +16,13 @@ void MemoryService::updateMemoryInfo()
     m_memoryInfo.swapUsed = (info.totalswap - info.freeswap) / 1024.0 / 1024.0;
     m_memoryInfo.swapAvailable = info.freeswap / 1024.0 / 1024.0;
     m_memoryInfo.swapUsage = (m_memoryInfo.swapUsed / (info.totalswap / 1024.0 / 1024.0)) * 100.0;
+
+    qDebug() << "Memory usage:" << m_memoryInfo.usedMemory << "MB"
+             << "Available:" << m_memoryInfo.availableMemory << "MB"
+             << "RAM Usage:" << m_memoryInfo.ramUsage << "%"
+             << "Swap Used:" << m_memoryInfo.swapUsed << "MB"
+             << "Swap Available:" << m_memoryInfo.swapAvailable << "MB"
+             << "Swap Usage:" << m_memoryInfo.swapUsage << "%";
 }
 
 void MemoryService::startMonitoring()

@@ -49,7 +49,7 @@ Rectangle {
                 Layout.fillWidth: true
                 title: ""
                 Canvas {
-                    id: cpuCanvas
+                    id: gpuCanvas
 
                     // Danh sách lưu % CPU (0-100)
                     property var gpuData: []
@@ -67,22 +67,33 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     // Timer cập nhật dữ liệu
-                    Timer {
-                        interval: 500 // 0.5 giây
-                        running: true
-                        repeat: true
-                        onTriggered: {
-                            // Thêm dữ liệu ngẫu nhiên (0-100%)
-                            var newValue = Math.random() * 100;
-                            cpuCanvas.gpuData.push(newValue);
+                    //Timer {
+                    //    interval: 500 // 0.5 giây
+                    //    running: true
+                    //    repeat: true
+                    //    onTriggered: {
+                    //        // Thêm dữ liệu ngẫu nhiên (0-100%)
+                    //        var newValue = Math.random() * 100;
+                    //        gpuCanvas.gpuData.push(newValue);
 
+                    //        // Giới hạn số điểm dữ liệu
+                    //        if (gpuCanvas.gpuData.length > gpuCanvas.maxDataPoints) {
+                    //            gpuCanvas.gpuData.shift();
+                    //        }
+
+                    //        // Yêu cầu vẽ lại
+                    //        gpuCanvas.requestPaint();
+                    //    }
+                    //}
+                    Connections {
+                        target: modelController
+                        onNetworkInfoChanged: {
+                            gpuCanvas.gpuData.push((modelController.gpuInfo.clockSpeed / modelController.gpuInfo.clockSpeedMax) * 100);
                             // Giới hạn số điểm dữ liệu
-                            if (cpuCanvas.gpuData.length > cpuCanvas.maxDataPoints) {
-                                cpuCanvas.gpuData.shift();
-                            }
-
-                            // Yêu cầu vẽ lại
-                            cpuCanvas.requestPaint();
+                            if (gpuCanvas.gpuData.length > gpuCanvas.maxDataPoints) {
+                                gpuCanvas.gpuData.shift();
+                            } 
+                            gpuCanvas.requestPaint();
                         }
                     }
 
@@ -165,11 +176,11 @@ Rectangle {
 //                        columnSpacing: 2
                         spacing: 1
 
-                        Label {color: "black"; text: "GPU Memmory:" ;font.family: "Times New Roman";Layout.alignment: Qt.AlignLeft;font.pixelSize: 12 }
-                        Label {color: "black"; text:  modelController.gpuInfo.gpuMemory.toFixed(0) + "MB"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12 }
+                        Label {color: "black"; text: "GPU Memmory:" ;font.family: "Times New Roman";Layout.alignment: Qt.AlignLeft;font.pointSize: 10 }
+                        Label {color: "black"; text:  modelController.gpuInfo.gpuMemory.toFixed(0) + "MB"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10 }
 
-                        Label {color: "black"; text: "Clock:";font.family: "Times New Roman";font.pixelSize: 12 }
-                        Label {color: "black"; text: modelController.gpuInfo.clockSpeed.toFixed(0) + "MHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12 }
+                        Label {color: "black"; text: "Clock:";font.family: "Times New Roman";font.pointSize: 10 }
+                        Label {color: "black"; text: modelController.gpuInfo.clockSpeed.toFixed(0) + "MHz"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10 }
                     }
                 }
                 GroupBox
@@ -181,11 +192,11 @@ Rectangle {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.fillHeight: false
 
-                        Label { color: "black"; text: "Utilization:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft;font.pixelSize: 12}
-                        Label { text: (modelController.gpuInfo.clockSpeed / modelController.gpuInfo.clockSpeedMax) * 100 + "%"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12}
+                        Label { color: "black"; text: "Utilization:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft;font.pointSize: 10}
+                        Label { text: (modelController.gpuInfo.clockSpeed / modelController.gpuInfo.clockSpeedMax) * 100 + "%"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10}
 
-                        Label { color: "black"; text: "Temp:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft;font.pixelSize: 12}
-                        Label { text: modelController.gpuInfo.temperature.toFixed(1) + "°C"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pixelSize: 12}
+                        Label { color: "black"; text: "Temp:";font.family: "Times New Roman" ; Layout.alignment: Qt.AlignLeft;font.pointSize: 10}
+                        Label { text: modelController.gpuInfo.temperature.toFixed(1) + "°C"; font.bold: true; font.family: "Times New Roman"; Layout.alignment: Qt.AlignRight;font.pointSize: 10}
                     }
                 }
 

@@ -17,8 +17,10 @@ void NetworkService::parseIwOutput(const QString &output)
 {
     QRegularExpression ssidRegex("SSID:\\s(.+)");
     QRegularExpression freqRegex("freq:\\s(\\d+)");
-    QRegularExpression rxRateRegex("rx bitrate:\\s(\\d+\\.\\d+)");
-    QRegularExpression txRateRegex("tx bitrate:\\s(\\d+\\.\\d+)");
+    // QRegularExpression rxRateRegex("rx bitrate:\\s(\\d+\\.\\d+)");
+    // QRegularExpression txRateRegex("tx bitrate:\\s(\\d+\\.\\d+)");
+    QRegularExpression rxBytesRegex("RX:\\s(\\d+)\\sbytes");
+    QRegularExpression txBytesRegex("TX:\\s(\\d+)\\sbytes");
 
     QRegularExpressionMatch ssidMatch = ssidRegex.match(output);
     if (ssidMatch.hasMatch()) {
@@ -33,14 +35,26 @@ void NetworkService::parseIwOutput(const QString &output)
     }
 
 
-    QRegularExpressionMatch rxRateMatch = rxRateRegex.match(output);
-    if (rxRateMatch.hasMatch()) {
-        m_networkInfo.downloadSpeed = rxRateMatch.captured(1).toFloat() / 1024.0; // Convert to Mbps
+    // QRegularExpressionMatch rxRateMatch = rxRateRegex.match(output);
+    // if (rxRateMatch.hasMatch()) {
+    //     m_networkInfo.downloadSpeed = rxRateMatch.captured(1).toFloat() / 1024.0; // Convert to Mbps
+    // }
+
+    // QRegularExpressionMatch txRateMatch = txRateRegex.match(output);
+    // if (txRateMatch.hasMatch()) {
+    //     m_networkInfo.uploadSpeed = txRateMatch.captured(1).toFloat() / 1024.0; // Convert to Mbps
+    // }
+
+    QRegularExpressionMatch rxBytesMatch = rxBytesRegex.match(output);
+    if (rxBytesMatch.hasMatch()) {
+        m_networkInfo.downloadSpeed = rxBytesMatch.captured(1).toFloat() / 1024.0 - m_lastBytesReceived; // Convert to Mbps
+        m_lastBytesReceived = rxBytesMatch.captured(1).toFloat() / 1024.0; // Store the last received bytes for next calculation
     }
 
-    QRegularExpressionMatch txRateMatch = txRateRegex.match(output);
-    if (txRateMatch.hasMatch()) {
-        m_networkInfo.uploadSpeed = txRateMatch.captured(1).toFloat() / 1024.0; // Convert to Mbps
+    QRegularExpressionMatch txBytesMatch = txBytesRegex.match(output);
+    if (txBytesMatch.hasMatch()) {
+         m_networkInfo.uploadSpeed = txBytesMatch.captured(1).toFloat() / 1024.0 - m_lastBytesTransmitted; // Convert to Mbps
+        m_lastBytesTransmitted = txBytesMatch.captured(1).toFloat() / 1024.0; // Store the last transmitted bytes for next calculation
     }
 }
 
