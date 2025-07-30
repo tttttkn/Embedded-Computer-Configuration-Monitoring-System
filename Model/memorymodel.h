@@ -2,35 +2,25 @@
 #define MEMORYMODEL_H
 
 #include <QObject>
-#include <QTimer>
-#include <QVariant>
-#include <QDebug>
-#include <sys/sysinfo.h>
+#include <QVariantMap>
+#include "Service/memoryservice.h"
 
 class MemoryModel : public QObject
 {
     Q_OBJECT
-
 
 public:
     explicit MemoryModel(QObject *parent = nullptr);
 
     QVariantMap getMemoryInfo() const { return m_memoryInfo; }
 
-    void updateMemoryInfo();
-
-    
-    
 signals:
-
+    void memoryInfoUpdated();
 public slots:
-
+    void updateMemoryInfo(const MemoryInfo &info);
 
 private:
     QVariantMap m_memoryInfo;
-
-    QTimer m_timer;
-
 };
 
 #endif // MEMORYMODEL_H

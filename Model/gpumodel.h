@@ -9,6 +9,10 @@
 #include <sys/sysinfo.h>
 #include <QQuickItem>
 #include <QFile>
+#include "Service/gpuservice.h"
+
+
+
 class GPUModel : public QObject
 {
     Q_OBJECT
@@ -17,21 +21,18 @@ class GPUModel : public QObject
 public:
     explicit GPUModel(QObject *parent = nullptr);
 
-    void updateGpuInfo();
-
+    
     QVariantMap getGpuInfo() const { return m_gpuInfo; }
-
-signals:
-
-public slots:
+    
+    signals:
+    void gpuInfoUpdated();
+    
+    public slots:
+    void updateGpuInfo(const GpuInfo &info);
 
 private:
     QVariantMap m_gpuInfo;
-    float convertMemToFloat(const QString &str);
-    float convertTempToFloat(const QString &str);
-    float convertFreqToFloat(const QString &str);
 
-    QString runCommand(const QString &cmd);
 };
 
 #endif // GPUMODEL_H

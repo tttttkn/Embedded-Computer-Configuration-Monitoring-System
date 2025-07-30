@@ -1,3 +1,7 @@
 Gen/
 .qmake.stash
 Makefile
+*.o
+moc_*
+monitor
+qrc_*

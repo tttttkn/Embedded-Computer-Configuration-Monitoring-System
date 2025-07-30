@@ -2,33 +2,26 @@
 #define STORAGEMODEL_H
 
 #include <QObject>
-#include <QTimer>
-#include <QProcess>
-#include <QStorageInfo>
-#include <QDebug>
+#include <QVariantMap>
+#include "Service/storageservice.h"
 
 class StorageModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantMap storageInfo READ storageInfo NOTIFY storageInfoChanged)
 
 public:
     explicit StorageModel(QObject *parent = nullptr);
 
-    QVariantMap getStorageInfo();
+    QVariantMap getStorageInfo() const { return m_storageInfo; }
 
-    QVariantMap storageInfo() const;
 signals:
-    void storageInfoChanged();
-
+    void storageInfoUpdated();
+    
 public slots:
-
-    void updateStorageInfo();
+    void updateStorageInfo(const StorageInfo &info);
 
 private:
     QVariantMap m_storageInfo;
-    QTimer m_timer;
-
 };
 
 #endif // STORAGEMODEL_H

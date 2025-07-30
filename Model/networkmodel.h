@@ -2,41 +2,25 @@
 #define NETWORKMODEL_H
 
 #include <QObject>
-#include <QTimer>
-#include <QNetworkInterface>
-#include <QNetworkConfigurationManager>
-#include <QNetworkConfiguration>
-#include <QProcess>
-#include <QDebug>
-#include <QFile>
+#include <QVariantMap>
+#include "Service/networkservice.h"
 
 class NetworkModel : public QObject
 {
- Q_OBJECT
-
+    Q_OBJECT
 
 public:
     explicit NetworkModel(QObject *parent = nullptr);
 
-    QVariantMap getNetworkInfo() const;
+    QVariantMap getNetworkInfo() const { return m_networkInfo; }
 
-    void updateNetworkInfo();
-    QString getWifiBand();
-    void updateNetworkSpeed();
-
-    
-    
 signals:
-
+    void networkInfoUpdated();
 public slots:
-
+    void updateNetworkInfo(const NetworkInfo &info);
 
 private:
-    float m_lastBytesReceived;
-    float m_lastBytesTransmitted;
     QVariantMap m_networkInfo;
-    QTimer m_timer;
-
 };
 
 #endif // NETWORKMODEL_H

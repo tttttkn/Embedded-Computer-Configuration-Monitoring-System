@@ -9,6 +9,9 @@
 #include <Model/storagemodel.h>
 #include <Model/gpumodel.h>
 
+#include "Service/cpuservice.h"
+#include "Service/gpuservice.h"
+
 class ModelController : public QObject
 {
     Q_OBJECT
@@ -25,15 +28,20 @@ class ModelController : public QObject
     Q_PROPERTY(QVariantMap memoryInfo READ memoryInfo NOTIFY memoryInfoChanged)
 
     Q_PROPERTY(QVariantMap networkInfo READ networkInfo NOTIFY networkInfoChanged)
+
+    Q_PROPERTY(QVariantMap storageInfo READ storageInfo NOTIFY storageInfoChanged)
     
 
 public:
     explicit ModelController(QObject *parent = nullptr);
     ~ModelController();
 
+    void initServices();
+
+
     float cpuTemp() const;
-    QVariantList cpuUsage();
-    float lastCpuUsage();
+    QVariantList cpuUsage() const;
+    float lastCpuUsage() const;
     float cpuClock() const;
     int totalProcesses() const;
     int totalThreads() const;
@@ -43,6 +51,8 @@ public:
     QVariantMap memoryInfo() const;
 
     QVariantMap networkInfo() const;
+
+    QVariantMap storageInfo() const;
 
 
 
@@ -61,6 +71,8 @@ signals:
 
     void networkInfoChanged();
 
+    void storageInfoChanged();
+
 
 
 
@@ -73,6 +85,8 @@ public slots:
 
     void updateNetworkInfo();
 
+    void updateStorageInfo();
+
 private:
     CpuModel cpuModel;
     MemoryModel memoryModel;
@@ -81,8 +95,20 @@ private:
     GPUModel gpuModel;
     QTimer m_timer;
 
-    
+    CpuService m_cpuService;
+    QThread cpuThread;
 
+    GpuService m_gpuService;
+    QThread gpuThread;
+
+    MemoryService m_memoryService;
+    QThread memoryThread;
+
+    NetworkService m_networkService;
+    QThread networkThread;
+
+    StorageService m_storageService;
+    QThread storageThread;
 
 };
 
