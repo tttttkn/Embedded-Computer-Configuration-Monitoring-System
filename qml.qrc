@@ -1,17 +1,21 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>ProgressCircle.qml</file>
-        <file>MenuBarView.qml</file>
-        <file>CpuGadget.qml</file>
-        <file>GpuGadget.qml</file>
-        <file>MemoryGadget.qml</file>
-        <file>StorageNetworkGadget.qml</file>
-        <file>DateTimeGadget.qml</file>
-        <file>CpuInfoView.qml</file>
-        <file>HomeGadget.qml</file>
-        <file>GpuInfoView.qml</file>
-        <file>MemoryInfoView.qml</file>
-        <file>NetworkInfoView.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/ProgressCircle.qml</file>
+        <file>qml/MenuBarView.qml</file>
+        <file>qml/CpuGadget.qml</file>
+        <file>qml/GpuGadget.qml</file>
+        <file>qml/MemoryGadget.qml</file>
+        <file>qml/StorageNetworkGadget.qml</file>
+        <file>qml/DateTimeGadget.qml</file>
+        <file>qml/CpuInfoView.qml</file>
+        <file>qml/HomeGadget.qml</file>
+        <file>qml/GpuInfoView.qml</file>
+        <file>qml/MemoryInfoView.qml</file>
+        <file>qml/NetworkInfoView.qml</file>
+        <file>qml/Setting.qml</file>
+        <file>qml/System.qml</file>
+        <file>qml/ContactModel.qml</file>
+        <file>qml/Logs.qml</file>
     </qresource>
 </RCC>

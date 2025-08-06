@@ -33,7 +33,7 @@ Rectangle {
                 radius: 10
             }
             Image {
-                source: "qrc:/icon/settings_24dp.svg"
+                source: "qrc:/assets/image/settings_24dp.svg"
                 anchors.centerIn: parent
                 width: 32
                 height: 32
@@ -58,7 +58,7 @@ Rectangle {
             }
             
             Image {
-                source: "qrc:/icon/notify_24dp.svg"
+                source: "qrc:/assets/image/notify_24dp.svg"
                 anchors.centerIn: parent
                 width: 32
                 height: 32
@@ -86,7 +86,7 @@ Rectangle {
             }
             
             Image {
-                source: "qrc:/icon/home_24dp.svg"
+                source: "qrc:/assets/image/home_24dp.svg"
                 anchors.centerIn: parent
                 width: 32
                 height: 32

@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     modelController.initServices();
     engine.rootContext()->setContextProperty("navigator", &navigator);
     engine.rootContext()->setContextProperty("modelController", &modelController);
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

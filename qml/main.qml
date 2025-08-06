@@ -41,7 +41,7 @@ Window {
         anchors.right: parent.right
         anchors.rightMargin: 0
         //        initialItem: Qt.resolvedUrl("HomeGadget.qml")
-        initialItem: HomeGadget {}
+        initialItem: Setting {}
 //        initialItem: Qt.resolvedUrl("CpuPage.qml")
 
 

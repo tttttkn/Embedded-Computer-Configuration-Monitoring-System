@@ -116,7 +116,7 @@ Button {
         anchors.left: parent.left
         anchors.leftMargin: 5
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/icon/arrow_upward_24dp.svg"
+        source: "qrc:/assets/image/arrow_upward_24dp.svg"
         
         Text {
             id: element2
@@ -136,7 +136,7 @@ Button {
         anchors.right: parent.right
         anchors.rightMargin: 30
         fillMode: Image.PreserveAspectFit
-        source: "/icon/arrow_downward_24dp.svg"
+        source: "/assets/image/arrow_downward_24dp.svg"
         
         Text {
             id: element3
