@@ -16,16 +16,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         Controllers/navigationcontroller.cpp \
         Controllers/modelcontroller.cpp \
+        Controllers/logger.cpp \
         Model/cpumodel.cpp \
         Model/memorymodel.cpp \
         Model/networkmodel.cpp \
         Model/storagemodel.cpp \
         Model/gpumodel.cpp \
+        Model/systemmodel.cpp \
         Service/cpuservice.cpp \
         Service/gpuservice.cpp \
         Service/memoryservice.cpp \
         Service/networkservice.cpp \
         Service/storageservice.cpp \
+        Service/systemservice.cpp \
         main.cpp
 
 RESOURCES += qml.qrc \
@@ -52,10 +55,13 @@ HEADERS += \
     Service/memoryservice.h \
     Service/networkservice.h \
     Service/storageservice.h \
+    Service/systemservice.h \
     Controllers/navigationcontroller.h \
     Controllers/modelcontroller.h \
+    Controllers/logger.h \
     Model/cpumodel.h \
     Model/memorymodel.h \
     Model/networkmodel.h \
     Model/gpumodel.h \
-    Model/storagemodel.h
+    Model/storagemodel.h \
+    Model/systemmodel.h \

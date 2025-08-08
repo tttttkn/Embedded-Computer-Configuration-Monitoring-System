@@ -3,14 +3,14 @@
 
 #include <QObject>
 #include <QDebug>
-#include <Model/cpumodel.h>
-#include <Model/memorymodel.h>
-#include <Model/networkmodel.h>
-#include <Model/storagemodel.h>
-#include <Model/gpumodel.h>
+#include "Model/cpumodel.h"
+#include "Model/memorymodel.h"
+#include "Model/networkmodel.h"
+#include "Model/storagemodel.h"
+#include "Model/gpumodel.h"
+#include "Model/systemmodel.h"
+#include "logger.h"
 
-#include "Service/cpuservice.h"
-#include "Service/gpuservice.h"
 
 class ModelController : public QObject
 {
@@ -30,14 +30,18 @@ class ModelController : public QObject
     Q_PROPERTY(QVariantMap networkInfo READ networkInfo NOTIFY networkInfoChanged)
 
     Q_PROPERTY(QVariantMap storageInfo READ storageInfo NOTIFY storageInfoChanged)
-    
+
+    Q_PROPERTY(QVariantMap staticSystemInfo READ staticSystemInfo NOTIFY staticSystemInfoChanged)
+
+    Q_PROPERTY(QString uptime READ uptime NOTIFY uptimeChanged)
+
+
 
 public:
     explicit ModelController(QObject *parent = nullptr);
     ~ModelController();
 
     void initServices();
-
 
     float cpuTemp() const;
     QVariantList cpuUsage() const;
@@ -54,6 +58,9 @@ public:
 
     QVariantMap storageInfo() const;
 
+    QVariantMap staticSystemInfo() const;
+
+    QString uptime() const;
 
 
 
@@ -73,7 +80,9 @@ signals:
 
     void storageInfoChanged();
 
+    void staticSystemInfoChanged();
 
+    void uptimeChanged();
 
 
 public slots:
@@ -87,13 +96,18 @@ public slots:
 
     void updateStorageInfo();
 
+    void updateStaticSystemInfo();
+
+    void updateSystemInfo();
+
+
 private:
     CpuModel cpuModel;
     MemoryModel memoryModel;
     NetworkModel networkModel;
     StorageModel storageModel;
     GPUModel gpuModel;
-    QTimer m_timer;
+    SystemModel systemModel;
 
     CpuService m_cpuService;
     QThread cpuThread;
@@ -109,6 +123,9 @@ private:
 
     StorageService m_storageService;
     QThread storageThread;
+
+    SystemService m_systemService;
+    QThread systemThread;
 
 };
 

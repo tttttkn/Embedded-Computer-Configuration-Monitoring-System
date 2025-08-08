@@ -24,6 +24,8 @@ Rectangle
         logListView.positionViewAtEnd()
     }
 
+
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 5
@@ -36,6 +38,15 @@ Rectangle
             Button {
                 text: "Test Message"
                 onClicked: addLogEntry("WARNING", "This is a test log message and you dont want to hide me")
+            }
+        }
+
+        Connections {
+            target: logger
+            onNewLogChanged: {
+                console.log("QML: newLogChanged signal received")
+                console.log("QML: new log value:", logger.newLog)
+                addLogEntry("WARNING", logger.newLog)
             }
         }
 
@@ -60,9 +71,7 @@ Rectangle
                     id: logText
                     text: "["+ timestamp + "]: " + message
                     width: parent.width
-//                    height: parent.height
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    //                    wrapMode: Tex
                 }
 
             }
@@ -71,16 +80,6 @@ Rectangle
             ScrollBar.vertical: ScrollBar {}
         }
     }
-
-    // Example of receiving system messages
-//    Component.onCompleted: {
-//        // Simulate system messages coming in
-//        for (let i = 0; i < 5; i++) {
-//            addLogEntry("INFO", "System initialized, component " + i + " ready")
-//        }
-//        addLogEntry("WARNING", "Network latency detected")
-//        addLogEntry("ERROR", "Failed to connect to database")
-//    }
 }
 
 /*##^##

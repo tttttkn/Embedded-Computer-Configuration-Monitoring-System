@@ -2,12 +2,15 @@
 
 ModelController::ModelController(QObject *parent) : QObject(parent)
 {
+
     //Init
-    updateCpuInfo(); 
+    updateCpuInfo();
     updateGpuInfo();
     updateMemoryInfo();
     updateNetworkInfo();
     updateStorageInfo();
+    updateSystemInfo();
+
 }
 
 ModelController::~ModelController()
@@ -26,10 +29,16 @@ ModelController::~ModelController()
 
     storageThread.quit();
     storageThread.wait();
+
+    systemThread.quit();
+    systemThread.wait();
 }
 
 void ModelController::initServices()
 {
+
+    Logger::addLog("System monitoring initialized");
+
     m_cpuService.moveToThread(&cpuThread);
     connect(&m_cpuService, &CpuService::cpuInfoUpdated, &cpuModel, &CpuModel::updateCpuInfo);
     connect(&cpuModel, &CpuModel::cpuInfoUpdated, this, &ModelController::updateCpuInfo);
@@ -60,6 +69,18 @@ void ModelController::initServices()
     connect(&storageModel, &StorageModel::storageInfoUpdated, this, &ModelController::updateStorageInfo);
     storageThread.start();
     QMetaObject::invokeMethod(&m_storageService, "startMonitoring", Qt::QueuedConnection);
+
+    m_systemService.moveToThread(&systemThread);
+    connect(&m_systemService, &SystemService::staticSystemInfoUpdated, &systemModel, &SystemModel::updateStaticSystemInfo);
+    connect(&systemModel, &SystemModel::staticSystemInfoUpdated, this, &ModelController::updateStaticSystemInfo);
+    connect(&m_systemService, &SystemService::systemInfoUpdated, &systemModel, &SystemModel::updateSystemInfo);
+    connect(&systemModel, &SystemModel::systemInfoUpdated, this, &ModelController::updateSystemInfo);
+    systemThread.start();
+    QMetaObject::invokeMethod(&m_systemService, "init", Qt::QueuedConnection);
+    QMetaObject::invokeMethod(&m_systemService, "startMonitoring", Qt::QueuedConnection);
+
+    
+
 }
 
 
@@ -97,20 +118,11 @@ int ModelController::totalThreads() const
 
 void ModelController::updateCpuInfo()
 {
-    // cpuModel.updateCpuUsage();
     emit cpuUsageChanged();
     emit lastCpuUsageChanged();
-
-    // cpuModel.updateCpuTemperature();
     emit cpuTempChanged();
-
-    // cpuModel.updateCpuClock();
     emit cpuClockChanged();
-    
-    // cpuModel.updateTotalProcesses();
     emit totalProcessesChanged();
-    
-    // cpuModel.updateTotalThreads();
     emit totalThreadsChanged();
 }
 
@@ -139,9 +151,9 @@ QVariantMap ModelController::networkInfo() const
     return networkModel.getNetworkInfo();
 }
 
+
 void ModelController::updateNetworkInfo()
 {
-    // networkModel.updateNetworkInfo();
     emit networkInfoChanged();
 }
 
@@ -152,6 +164,35 @@ QVariantMap ModelController::storageInfo() const
 
 void ModelController::updateStorageInfo()
 {
-    // storageModel.updateStorageInfo();
     emit storageInfoChanged();
 }
+
+QVariantMap ModelController::staticSystemInfo() const
+{
+    return systemModel.getStaticSystemInfo();
+}
+
+void ModelController::updateStaticSystemInfo()
+{
+    emit staticSystemInfoChanged();
+}
+
+void ModelController::updateSystemInfo()
+{
+    emit uptimeChanged();
+}
+
+QString ModelController::uptime() const
+{
+    return systemModel.getUptime();
+}
+
+// void ModelController::updateLogger()
+// {
+//     emit newLogChanged();
+// }
+
+// QString ModelController::newLog() const
+// {
+//     return Logger::getInstance()->newLog();
+// }

@@ -2,9 +2,6 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
-import QtQuick.Shapes 1.12
-import QtGraphicalEffects 1.0  // Hoặc phiên bản thấp hơn tùy Qt version
-import QtQuick.Controls.Styles 1.4
 
 Window {
     id: window
@@ -13,54 +10,123 @@ Window {
     height: 240
     maximumHeight: height
     maximumWidth: width
-
     minimumHeight: height
     minimumWidth: width
     color: "#cacaca"
-
     title: "System Dashboard"
-    //flags: Qt.Window | Qt.FramelessWindowHint
 
     property color buttonColor: "#3498db"
     property color buttonPressedColor: "#2980b9"
-    property color menuColor: "#2c3e50"
+    property color menuColor: "#70786e"
     property color menuPressedColor: "#34495e"
 
-    MenuBarView {}
-//        id: menuBar
+    Rectangle {
+        id: root
+        anchors.fill: parent
+        color: "transparent"
 
+        RowLayout {
+            anchors.fill: parent
+            spacing: 0
 
-    StackView {
-        id: stackView
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 34
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        //        initialItem: Qt.resolvedUrl("HomeGadget.qml")
-        initialItem: Setting {}
-//        initialItem: Qt.resolvedUrl("CpuPage.qml")
+            // Vertical Tab Bar - 34px width
+            Rectangle {
+                id: sideBar
+                Layout.fillHeight: true
+                Layout.preferredWidth: 34
+                color: "transparent"
 
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 2
+                    anchors.leftMargin: 1
+                    anchors.topMargin: 2
+                    anchors.bottomMargin: 2
 
+                    // Home Tab
+                    TabButton {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: sideBar.width
+                        
+                        background: Rectangle {
+                            color: stackLayout.currentIndex === 0 ? menuPressedColor : menuColor
+                            border.color: "black"
+                            radius: 10
+                        }
 
-    }
+                        Image {
+                            source: "qrc:/assets/image/home_24dp.svg"
+                            anchors.centerIn: parent
+                        width: 32
+                        height: 32
+                        }
 
-        Connections {
-            target: navigator
-            onViewChanged: {
-                stackView.push(targetUrl)
+                        onClicked: stackLayout.currentIndex = 0
+                    }
+
+                    // Settings Tab
+                    TabButton {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: sideBar.width
+                        
+                        background: Rectangle {
+                            color: stackLayout.currentIndex === 1 ? menuPressedColor : menuColor
+                            border.color: "black"
+                            radius: 10
+                        }
+
+                        Image {
+                            source: "qrc:/assets/image/settings_24dp.svg"
+                            anchors.centerIn: parent
+                        width: 32
+                        height: 32
+                        }
+
+                        onClicked: stackLayout.currentIndex = 1
+                    }
+
+                    // Notification Tab
+                    TabButton {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: sideBar.width
+                        
+                        background: Rectangle {
+                            color: stackLayout.currentIndex === 2 ? menuPressedColor : menuColor
+                            border.color: "black"
+                            radius: 10
+                        }
+
+                        Image {
+                            source: "qrc:/assets/image/notify_24dp.svg"
+                            anchors.centerIn: parent
+                        width: 32
+                        height: 32
+                        }
+
+                        onClicked: stackLayout.currentIndex = 2
+                    }
+                }
+            }
+
+            // Content Area
+            StackLayout {
+                id: stackLayout
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                currentIndex: 0
+
+                HomeGadget{}
+                Setting{}
+                
+                Rectangle {
+                    color: "transparent"
+                    Label {
+                        anchors.centerIn: parent
+                        text: "TBD"
+                        font.pixelSize: 24
+                    }
+                }
             }
         }
-
-
+    }
 }
-
-
-
-
-
-
-

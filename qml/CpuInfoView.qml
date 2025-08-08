@@ -72,7 +72,7 @@ Rectangle {
                         target: modelController
                         onCpuUsageChanged: {
                         cpuCanvas.requestPaint();
-                    }
+                        }
                     }
                     onPaint: {
                         var ctx = getContext("2d");

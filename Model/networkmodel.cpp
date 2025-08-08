@@ -15,13 +15,13 @@ void NetworkModel::updateNetworkInfo(const NetworkInfo &info)
     m_networkInfo["uploadSpeed"] = info.uploadSpeed;
 
 
-    qDebug() << "SSID:" << info.ssid;
-    qDebug() << "Interface Name:" << info.interfaceName;
-    qDebug() << "IPv4:" << info.ipv4;
-    qDebug() << "MAC Address:" << info.macAddress;
-    qDebug() << "WiFi Band:" << info.wifiBand;
-    qDebug() << "Download Speed:" << info.downloadSpeed;
-    qDebug() << "Upload Speed:" << info.uploadSpeed;
+    // qDebug() << "SSID:" << info.ssid;
+    // qDebug() << "Interface Name:" << info.interfaceName;
+    // qDebug() << "IPv4:" << info.ipv4;
+    // qDebug() << "MAC Address:" << info.macAddress;
+    // qDebug() << "WiFi Band:" << info.wifiBand;
+    // qDebug() << "Download Speed:" << info.downloadSpeed;
+    // qDebug() << "Upload Speed:" << info.uploadSpeed;
 
     emit networkInfoUpdated();
 }

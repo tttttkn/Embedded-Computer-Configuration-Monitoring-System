@@ -7,8 +7,10 @@
 #include "Model/networkmodel.h"
 #include "Model/storagemodel.h"
 #include "Model/gpumodel.h"
+#include "Model/systemmodel.h"
 #include "Controllers/navigationcontroller.h"
 #include "Controllers/modelcontroller.h"
+#include "Controllers/logger.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,14 +23,15 @@ int main(int argc, char *argv[])
     qRegisterMetaType<MemoryInfo>("MemoryInfo");
     qRegisterMetaType<NetworkInfo>("NetworkInfo");
     qRegisterMetaType<StorageInfo>("StorageInfo");
+    qRegisterMetaType<StaticSystemInfo>("StaticSystemInfo");
 
     QQmlApplicationEngine engine;
     ModelController modelController;
     NavigationController navigator;
 
-    modelController.initServices();
     engine.rootContext()->setContextProperty("navigator", &navigator);
     engine.rootContext()->setContextProperty("modelController", &modelController);
+    engine.rootContext()->setContextProperty("logger", Logger::getInstance());
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -36,6 +39,10 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+    modelController.initServices();
+    Logger::addLog("System monitoring started");
+
 
     return app.exec();
 }

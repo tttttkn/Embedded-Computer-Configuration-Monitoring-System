@@ -5,43 +5,56 @@ import QtQuick.Window 2.12
 import QtQuick.Shapes 1.12
 import QtGraphicalEffects 1.0
 
-Rectangle
-{
+Rectangle {
     anchors.fill: parent
     color: "transparent"
+    border.color: "black"
+    radius: 5
+
     ColumnLayout {
         anchors.fill: parent
-        ListModel{
-            id: nameModel
-            ListElement {name: "Host name: raspberrypi"}
-            ListElement {name: "OS version: Raspberry Pi Os"}
-            ListElement {name: "Kernel version: 5.14.2"}
-            ListElement {name: "Uptime:"}
+        spacing: 2
+        anchors.leftMargin: 3  // Thêm lề trái chung cho cả ColumnLayout
 
+        Text {
+            text: "Host name: " + modelController.staticSystemInfo.hostname
+            font.pixelSize: 15
+            Layout.leftMargin: 3  // Sử dụng Layout.leftMargin thay vì anchors.leftMargin
         }
-        Component {
-            id: nameDelegate
-            Text {
-                id: name
-                text: model.name
-                font.pixelSize: 20
+
+        Text {
+            text: "OS version: " + modelController.staticSystemInfo.os
+            font.pixelSize: 15
+            Layout.leftMargin: 3
+        }
+
+        Text {
+            text: "Kernel version: " + modelController.staticSystemInfo.kernelVersion
+            font.pixelSize: 15
+            Layout.leftMargin: 3
+        }
+
+        Text {
+            text: "Uptime: " + modelController.uptime
+            font.pixelSize: 15
+            Layout.leftMargin: 3
+        }
+
+        Timer {
+            id: clockTimer1
+            interval: 1000  
+            running: true
+            repeat: true
+            onTriggered: {
+                var now = new Date()
+                sysTime.text = "System Time: " + Qt.formatTime(now, "hh:mm:ss")
             }
         }
-
-        ListView
-        {
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            anchors.fill: parent
-            model: nameModel
-            delegate: nameDelegate
-            clip: true
-            spacing: 5
+        
+        Text {
+            id: sysTime
+            font.pixelSize: 15
+            Layout.leftMargin: 3
         }
-
-
-
     }
-
 }
-
-

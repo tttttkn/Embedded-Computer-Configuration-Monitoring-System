@@ -65,7 +65,6 @@ Button {
         id: element4
         x: 25
         y: 38
-        //            text: qsTr("09/06/2025")
         anchors.right: parent.right
         anchors.rightMargin: 10
         font.pixelSize: 12
@@ -75,7 +74,6 @@ Button {
         id: element5
         x: 58
         y: 85
-        //            text: qsTr("09 : 34")
         anchors.right: parent.right
         anchors.rightMargin: 10
         font.pixelSize: 13

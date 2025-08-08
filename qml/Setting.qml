@@ -91,13 +91,6 @@ Rectangle {
                     Layout.fillHeight: true
                     currentIndex: tabBar.currentIndex // Liên kết 2 chiều
 
-//                    // Nội dung Tab 1
-//                    Rectangle {
-//                        border.color: "black"
-//                        color: "transparent"
-//                        radius: 5
-//                        Text { anchors.centerIn: parent; text: "Nội dung Tab 1"; font.bold: true }
-//                    }
                     System{}
 
                     // Nội dung Tab 2
@@ -112,11 +105,6 @@ Rectangle {
                         Text { anchors.centerIn: parent; text: "Nội dung Tab 3"; font.bold: true }
                     }
 
-//                    // Nội dung Tab 4
-//                    Rectangle {
-//                        color: "transparent"
-//                        Text { anchors.centerIn: parent; text: "Nội dung Tab 4"; font.bold: true }
-//                    }
                     Logs{}
                 }
     }
