@@ -11,6 +11,8 @@
 #include "Controllers/navigationcontroller.h"
 #include "Controllers/modelcontroller.h"
 #include "Controllers/logger.h"
+#include "Model/alertmodel.h"
+#include "QDateTime"
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +27,11 @@ int main(int argc, char *argv[])
     qRegisterMetaType<StorageInfo>("StorageInfo");
     qRegisterMetaType<StaticSystemInfo>("StaticSystemInfo");
 
+
+
+
+
+
     QQmlApplicationEngine engine;
     ModelController modelController;
     NavigationController navigator;
@@ -32,6 +39,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("navigator", &navigator);
     engine.rootContext()->setContextProperty("modelController", &modelController);
     engine.rootContext()->setContextProperty("logger", Logger::getInstance());
+    engine.rootContext()->setContextProperty("alertModel", AlertModel::getInstance());
+
+    // main.cpp
+
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

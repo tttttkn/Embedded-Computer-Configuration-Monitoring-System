@@ -9,8 +9,9 @@
 #include "Model/storagemodel.h"
 #include "Model/gpumodel.h"
 #include "Model/systemmodel.h"
+#include "Model/alertmodel.h"
 #include "logger.h"
-
+#include "Model/alertmodel.h"
 
 class ModelController : public QObject
 {
@@ -34,6 +35,12 @@ class ModelController : public QObject
     Q_PROPERTY(QVariantMap staticSystemInfo READ staticSystemInfo NOTIFY staticSystemInfoChanged)
 
     Q_PROPERTY(QString uptime READ uptime NOTIFY uptimeChanged)
+
+
+    Q_PROPERTY(int cpuWarn READ cpuWarn WRITE setCpuWarn)
+    Q_PROPERTY(int cpuCrit READ cpuCrit WRITE setCpuCrit)
+    Q_PROPERTY(int ramWarn READ ramWarn WRITE setRamWarn)
+
 
 
 
@@ -64,6 +71,11 @@ public:
 
 
 
+    int cpuWarn() const;
+    int cpuCrit() const;
+    int ramWarn() const;
+
+
 signals:
     void cpuTempChanged();
     void cpuUsageChanged();
@@ -84,6 +96,7 @@ signals:
 
     void uptimeChanged();
 
+    void alertModelChanged();
 
 public slots:
     void updateCpuInfo(); 
@@ -99,6 +112,10 @@ public slots:
     void updateStaticSystemInfo();
 
     void updateSystemInfo();
+
+    void setCpuWarn(int value);
+    void setCpuCrit(int value);
+    void setRamWarn(int value);
 
 
 private:

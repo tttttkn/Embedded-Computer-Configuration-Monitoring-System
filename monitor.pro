@@ -23,6 +23,7 @@ SOURCES += \
         Model/storagemodel.cpp \
         Model/gpumodel.cpp \
         Model/systemmodel.cpp \
+        Model/alertmodel.cpp \
         Service/cpuservice.cpp \
         Service/gpuservice.cpp \
         Service/memoryservice.cpp \
@@ -65,3 +66,6 @@ HEADERS += \
     Model/gpumodel.h \
     Model/storagemodel.h \
     Model/systemmodel.h \
+    Model/alertmodel.h \
+    
+

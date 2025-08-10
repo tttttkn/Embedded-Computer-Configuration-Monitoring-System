@@ -42,7 +42,7 @@ Rectangle {
                 contentItem: Text {
                     text: parent.text
                     font.bold: true
-                    color: tabBar.currentIndex === 1 ? "#225cba" : "black" // Màu khi chọn/không chọn
+                    color: tabBar.currentIndex === 1 ? "#225cba" : "black" 
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -93,17 +93,9 @@ Rectangle {
 
                     System{}
 
-                    // Nội dung Tab 2
-                    Rectangle {
-                        color: "transparent"
-                        Text { anchors.centerIn: parent; text: "Nội dung Tab 2"; font.bold: true }
-                    }
+                    Monitor{}
 
-                    // Nội dung Tab 3
-                    Rectangle {
-                        color: "transparent"
-                        Text { anchors.centerIn: parent; text: "Nội dung Tab 3"; font.bold: true }
-                    }
+                    Warning{}
 
                     Logs{}
                 }

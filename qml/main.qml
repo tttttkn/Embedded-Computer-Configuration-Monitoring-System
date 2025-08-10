@@ -138,14 +138,7 @@ Window {
                 }
                 Setting{}
                 
-                Rectangle {
-                    color: "transparent"
-                    Label {
-                        anchors.centerIn: parent
-                        text: "TBD"
-                        font.pixelSize: 24
-                    }
-                }
+                WarningHistory{}
             }
         }
     }

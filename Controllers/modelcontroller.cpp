@@ -32,6 +32,9 @@ ModelController::~ModelController()
 
     systemThread.quit();
     systemThread.wait();
+
+    // alertThread.quit();
+    // alertThread.wait();
 }
 
 void ModelController::initServices()
@@ -78,8 +81,7 @@ void ModelController::initServices()
     systemThread.start();
     QMetaObject::invokeMethod(&m_systemService, "init", Qt::QueuedConnection);
     QMetaObject::invokeMethod(&m_systemService, "startMonitoring", Qt::QueuedConnection);
-
-    
+    qDebug() << "System service initialized and monitoring started";
 
 }
 
@@ -124,6 +126,8 @@ void ModelController::updateCpuInfo()
     emit cpuClockChanged();
     emit totalProcessesChanged();
     emit totalThreadsChanged();
+    AlertModel::getInstance()->startAlertCpuWarn(systemModel.getCpuWarn(), lastCpuUsage());
+    AlertModel::getInstance()->startAlertCpuCrit(systemModel.getCpuCrit(), lastCpuUsage());
 }
 
 QVariantMap ModelController::gpuInfo() const
@@ -144,6 +148,7 @@ QVariantMap ModelController::memoryInfo() const
 void ModelController::updateMemoryInfo()
 {
     emit memoryInfoChanged();
+    AlertModel::getInstance()->startAlertRamWarn(systemModel.getRamWarn(), memoryModel.getMemoryInfo()["ramUsage"].toFloat());
 }
 
 QVariantMap ModelController::networkInfo() const
@@ -187,12 +192,33 @@ QString ModelController::uptime() const
     return systemModel.getUptime();
 }
 
-// void ModelController::updateLogger()
-// {
-//     emit newLogChanged();
-// }
+void ModelController::setCpuWarn(int value)
+{
+    qDebug() << "Setting CPU warning level to:" << value;
+    systemModel.setCpuWarn(value);
+}
 
-// QString ModelController::newLog() const
-// {
-//     return Logger::getInstance()->newLog();
-// }
+void ModelController::setCpuCrit(int value)
+{
+    systemModel.setCpuCrit(value);
+}
+
+void ModelController::setRamWarn(int value)
+{
+    systemModel.setRamWarn(value);
+}
+
+int ModelController::cpuWarn() const
+{
+    return systemModel.getCpuWarn();
+}
+
+int ModelController::cpuCrit() const
+{
+    return systemModel.getCpuCrit();
+}
+
+int ModelController::ramWarn() const
+{
+    return systemModel.getRamWarn();
+}

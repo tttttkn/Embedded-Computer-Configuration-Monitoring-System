@@ -8,7 +8,6 @@ Rectangle
     anchors.fill: parent
     color: "transparent"
 
-// Our log model
     ListModel {
         id: logModel
     }

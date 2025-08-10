@@ -17,5 +17,8 @@
         <file>qml/System.qml</file>
         <file>qml/ContactModel.qml</file>
         <file>qml/Logs.qml</file>
+        <file>qml/Monitor.qml</file>
+        <file>qml/Warning.qml</file>
+        <file>qml/WarningHistory.qml</file>
     </qresource>
 </RCC>
