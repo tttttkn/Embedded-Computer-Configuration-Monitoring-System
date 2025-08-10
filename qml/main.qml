@@ -49,7 +49,11 @@ Window {
                         Layout.preferredWidth: sideBar.width
                         
                         background: Rectangle {
-                            color: stackLayout.currentIndex === 0 ? menuPressedColor : menuColor
+                            color: 
+                            {
+                                parent.down ? buttonColor : "#70786e"
+                                stackLayout.currentIndex === 0 ? menuPressedColor : menuColor
+                            }
                             border.color: "black"
                             radius: 10
                         }
@@ -61,7 +65,13 @@ Window {
                         height: 32
                         }
 
-                        onClicked: stackLayout.currentIndex = 0
+                        onClicked:
+                        {
+                            stackLayout.currentIndex = 0
+                            stackView.pop()
+
+                        } 
+                            
                     }
 
                     // Settings Tab
@@ -115,7 +125,17 @@ Window {
                 Layout.fillHeight: true
                 currentIndex: 0
 
-                HomeGadget{}
+                StackView {
+                    id: stackView
+                    initialItem: Qt.resolvedUrl("HomeGadget.qml")
+                }
+
+                Connections {
+                    target: navigator
+                    onViewChanged: {
+                    stackView.push(targetUrl)
+                    }
+                }
                 Setting{}
                 
                 Rectangle {
@@ -129,4 +149,7 @@ Window {
             }
         }
     }
+
+
+ 
 }

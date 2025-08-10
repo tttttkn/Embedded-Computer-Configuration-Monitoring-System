@@ -38,7 +38,7 @@ Rectangle {
                 }
             }
             TabButton {
-                text: "Track"
+                text: "Monitor"
                 contentItem: Text {
                     text: parent.text
                     font.bold: true
@@ -53,7 +53,7 @@ Rectangle {
                 }
             }
             TabButton {
-                text: "Notify"
+                text: "Warning"
                 contentItem: Text {
                     text: parent.text
                     font.bold: true
