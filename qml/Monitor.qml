@@ -11,7 +11,84 @@ Rectangle {
     color: "transparent"
     border.color: "black"
     radius: 5
-     ColumnLayout {
+
+    Popup {
+        id: confirmMonitorPopup
+        width: 200
+        height: 100
+        anchors.centerIn: parent
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        background: Rectangle
+        {
+            radius: 5
+            color: "#f0f0f0"  
+            border.color: "#3498db" 
+            border.width: 2 
+        }
+
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 10
+            
+            Text {
+                text: "Save?"
+                font.pixelSize: 16
+                Layout.alignment: Qt.AlignHCenter
+                color: "#333333"  // Màu chữ đậm hơn
+            }
+            
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 20
+                
+                Button {
+                    text: "OK"
+                    font.pixelSize: 16
+                    Layout.preferredWidth: 70
+                    background: Rectangle
+                    {
+                        radius: 5
+                        color: parent.down ? "#27ae60" : "#2ecc71"  // Xanh lá cây
+                        border.color: "#27ae60"
+                        border.width: 1
+                    }
+                    contentItem: Text {
+                        text: parent.text
+                        color: "white"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: {
+                        confirmMonitorPopup.close()
+                    }
+                }
+                
+                Button {
+                    text: "Cancel"
+                    Layout.preferredWidth: 70
+                    background: Rectangle {
+                        radius: 5
+                        color: parent.down ? "#e74c3c" : "#ec7063"  // Đỏ
+                        border.color: "#e74c3c"
+                        border.width: 1
+                    }
+                    
+                    contentItem: Text {
+                        text: parent.text
+                        color: "white"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    onClicked: confirmMonitorPopup.close()
+                }
+            }
+        }
+    }
+
+    ColumnLayout {
         anchors.fill: parent
         anchors.leftMargin: 15
         anchors.rightMargin: 15
@@ -231,7 +308,7 @@ Rectangle {
             }
 
             onClicked: {
-
+                confirmMonitorPopup.open()
             }
         }
     }

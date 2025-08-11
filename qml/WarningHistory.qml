@@ -98,7 +98,7 @@ Rectangle {
             }
 
             onClicked: {
-                console.log("Delete all")
+                alert.clear()
             }
         }
     }

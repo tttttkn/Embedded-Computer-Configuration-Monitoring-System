@@ -1,4 +1,4 @@
-// AlertModel.h
+// Alert.h
 #ifndef ALERTMODEL_H
 #define ALERTMODEL_H
 
@@ -6,11 +6,11 @@
 #include <QVector>
 #include <QObject>
 
-class AlertModel : public QObject {
+class Alert : public QObject {
     Q_OBJECT
     Q_PROPERTY(QVariantMap newAlert READ newAlert NOTIFY newAlertChanged)
 public:
-    static AlertModel* getInstance();
+    static Alert* getInstance();
 
     QVariantMap newAlert() const;
 
@@ -34,11 +34,11 @@ private:
 
     void addAlertImpl(const QString &type, const QString &message);
 
-    AlertModel(QObject* parent = nullptr) : QObject(parent) {}
+    Alert(QObject* parent = nullptr) : QObject(parent) {}
 
     // Prevent copying
-    AlertModel(const AlertModel&) = delete;
-    AlertModel& operator=(const AlertModel&) = delete;
+    Alert(const Alert&) = delete;
+    Alert& operator=(const Alert&) = delete;
 
 
     bool m_isCpuWarn{false};

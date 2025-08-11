@@ -17,13 +17,13 @@ SOURCES += \
         Controllers/navigationcontroller.cpp \
         Controllers/modelcontroller.cpp \
         Controllers/logger.cpp \
+        Controllers/alert.cpp \
         Model/cpumodel.cpp \
         Model/memorymodel.cpp \
         Model/networkmodel.cpp \
         Model/storagemodel.cpp \
         Model/gpumodel.cpp \
         Model/systemmodel.cpp \
-        Model/alertmodel.cpp \
         Service/cpuservice.cpp \
         Service/gpuservice.cpp \
         Service/memoryservice.cpp \
@@ -60,12 +60,12 @@ HEADERS += \
     Controllers/navigationcontroller.h \
     Controllers/modelcontroller.h \
     Controllers/logger.h \
+    Controllers/alert.h \
     Model/cpumodel.h \
     Model/memorymodel.h \
     Model/networkmodel.h \
     Model/gpumodel.h \
     Model/storagemodel.h \
     Model/systemmodel.h \
-    Model/alertmodel.h \
     
 

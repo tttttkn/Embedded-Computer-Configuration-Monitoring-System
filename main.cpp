@@ -11,7 +11,7 @@
 #include "Controllers/navigationcontroller.h"
 #include "Controllers/modelcontroller.h"
 #include "Controllers/logger.h"
-#include "Model/alertmodel.h"
+#include "Controllers/alert.h"
 #include "QDateTime"
 
 int main(int argc, char *argv[])
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("navigator", &navigator);
     engine.rootContext()->setContextProperty("modelController", &modelController);
     engine.rootContext()->setContextProperty("logger", Logger::getInstance());
-    engine.rootContext()->setContextProperty("alertModel", AlertModel::getInstance());
+    engine.rootContext()->setContextProperty("alertModel", Alert::getInstance());
 
     // main.cpp
 

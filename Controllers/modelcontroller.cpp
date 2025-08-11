@@ -126,8 +126,8 @@ void ModelController::updateCpuInfo()
     emit cpuClockChanged();
     emit totalProcessesChanged();
     emit totalThreadsChanged();
-    AlertModel::getInstance()->startAlertCpuWarn(systemModel.getCpuWarn(), lastCpuUsage());
-    AlertModel::getInstance()->startAlertCpuCrit(systemModel.getCpuCrit(), lastCpuUsage());
+    Alert::getInstance()->startAlertCpuWarn(systemModel.getCpuWarn(), lastCpuUsage());
+    Alert::getInstance()->startAlertCpuCrit(systemModel.getCpuCrit(), lastCpuUsage());
 }
 
 QVariantMap ModelController::gpuInfo() const
@@ -148,7 +148,7 @@ QVariantMap ModelController::memoryInfo() const
 void ModelController::updateMemoryInfo()
 {
     emit memoryInfoChanged();
-    AlertModel::getInstance()->startAlertRamWarn(systemModel.getRamWarn(), memoryModel.getMemoryInfo()["ramUsage"].toFloat());
+    Alert::getInstance()->startAlertRamWarn(systemModel.getRamWarn(), memoryModel.getMemoryInfo()["ramUsage"].toFloat());
 }
 
 QVariantMap ModelController::networkInfo() const

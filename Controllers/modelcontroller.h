@@ -9,9 +9,8 @@
 #include "Model/storagemodel.h"
 #include "Model/gpumodel.h"
 #include "Model/systemmodel.h"
-#include "Model/alertmodel.h"
+#include "alert.h"
 #include "logger.h"
-#include "Model/alertmodel.h"
 
 class ModelController : public QObject
 {

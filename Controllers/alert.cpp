@@ -1,29 +1,27 @@
-// AlertModel.cpp
-
-#include "alertmodel.h"
+#include "alert.h"
 #include <QDateTime>
 
-AlertModel* AlertModel::getInstance()
+Alert* Alert::getInstance()
 {
-    static AlertModel instance; // Singleton instance
+    static Alert instance; // Singleton instance
     return &instance;
 }
 
-QVariantMap AlertModel::newAlert() const {
+QVariantMap Alert::newAlert() const {
     return m_newAlert;
 }
 
-void AlertModel::addAlert(const QString &type, const QString &message) {
+void Alert::addAlert(const QString &type, const QString &message) {
     getInstance()->addAlertImpl(type, message);
 }
 
-void AlertModel::addAlertImpl(const QString &type, const QString &message) {
+void Alert::addAlertImpl(const QString &type, const QString &message) {
     m_newAlert["type"] = type;
     m_newAlert["message"] = message;
     emit newAlertChanged();
 }
 
-void AlertModel::startAlertCpuWarn(const float threshold, const float cpuUsage) {
+void Alert::startAlertCpuWarn(const float threshold, const float cpuUsage) {
 
     if (cpuUsage > threshold && m_isCpuWarn == false) 
     {
@@ -32,14 +30,14 @@ void AlertModel::startAlertCpuWarn(const float threshold, const float cpuUsage) 
     }
 }
 
-void AlertModel::startAlertCpuCrit(const float threshold, const float cpuUsage) {
+void Alert::startAlertCpuCrit(const float threshold, const float cpuUsage) {
     if (cpuUsage > threshold && m_isCpuCrit == false) {
         addAlert("CRITICAL", QString("[Critical] CPU usage is critical: %1% > %2%").arg(cpuUsage).arg(threshold));
         m_isCpuCrit = true;
     }
 }
 
-void AlertModel::startAlertRamWarn(const float threshold, const float ramUsage) {
+void Alert::startAlertRamWarn(const float threshold, const float ramUsage) {
     if (ramUsage > threshold && m_isRamWarn == false) {
         addAlert("WARNING", QString("[Warning] RAM usage is high: %1% > %2%").arg(ramUsage).arg(threshold));
         m_isRamWarn = true;
