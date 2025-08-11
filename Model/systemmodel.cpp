@@ -24,22 +24,22 @@ void SystemModel::setCpuWarn(int value)
 {
     if (m_cpuWarn != value) {
         m_cpuWarn = value;
-        Logger::addLog(QString("CPU warning level set to %1 %").arg(value));
     }
+    Logger::addLog(QString("CPU warning level set to %1 %").arg(value));
 }
 
 void SystemModel::setCpuCrit(int value)
 {
     if (m_cpuCrit != value) {
         m_cpuCrit = value;
-        Logger::addLog(QString("CPU critical level set to %1 %").arg(value));
     }
+    Logger::addLog(QString("CPU critical level set to %1 %").arg(value));
 }
 
 void SystemModel::setRamWarn(int value)
 {
     if (m_ramWarn != value) {
         m_ramWarn = value;
-        Logger::addLog(QString("RAM warning level set to %1 %").arg(value));
     }
+    Logger::addLog(QString("RAM warning level set to %1 %").arg(value));
 }

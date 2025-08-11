@@ -27,6 +27,7 @@ Rectangle {
                 contentItem: Text {
                     text: parent.text
                     font.bold: true
+                    font.pixelSize: 16
                     color: tabBar.currentIndex === 0 ? "#225cba" : "black" // Màu khi chọn/không chọn
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -42,6 +43,7 @@ Rectangle {
                 contentItem: Text {
                     text: parent.text
                     font.bold: true
+                    font.pixelSize: 16
                     color: tabBar.currentIndex === 1 ? "#225cba" : "black" 
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -57,6 +59,7 @@ Rectangle {
                 contentItem: Text {
                     text: parent.text
                     font.bold: true
+                    font.pixelSize: 16
                     color: tabBar.currentIndex === 2 ? "#225cba" : "black" // Màu khi chọn/không chọn
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -71,7 +74,8 @@ Rectangle {
                 text: "Logs"
                 contentItem: Text {
                     text: parent.text
-                    font.bold: true
+                    font.bold: true    
+                    font.pixelSize: 16
                     color: tabBar.currentIndex === 3 ? "#225cba" : "black" // Màu khi chọn/không chọn
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter

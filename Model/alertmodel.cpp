@@ -27,21 +27,21 @@ void AlertModel::startAlertCpuWarn(const float threshold, const float cpuUsage) 
 
     if (cpuUsage > threshold && m_isCpuWarn == false) 
     {
-        addAlert("WARNING", QString("CPU usage is high: %1%").arg(cpuUsage));
+        addAlert("WARNING", QString("[Warning] CPU usage is high: %1% > %2%").arg(cpuUsage).arg(threshold));
         m_isCpuWarn = true;
     }
 }
 
 void AlertModel::startAlertCpuCrit(const float threshold, const float cpuUsage) {
     if (cpuUsage > threshold && m_isCpuCrit == false) {
-        addAlert("CRITICAL", QString("CPU usage is critical: %1%").arg(cpuUsage));
+        addAlert("CRITICAL", QString("[Critical] CPU usage is critical: %1% > %2%").arg(cpuUsage).arg(threshold));
         m_isCpuCrit = true;
     }
 }
 
 void AlertModel::startAlertRamWarn(const float threshold, const float ramUsage) {
     if (ramUsage > threshold && m_isRamWarn == false) {
-        addAlert("WARNING", QString("RAM usage is high: %1%").arg(ramUsage));
+        addAlert("WARNING", QString("[Warning] RAM usage is high: %1% > %2%").arg(ramUsage).arg(threshold));
         m_isRamWarn = true;
     }
 }

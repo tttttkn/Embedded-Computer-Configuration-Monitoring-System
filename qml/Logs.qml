@@ -35,8 +35,7 @@ Rectangle
                 onClicked: logModel.clear()
             }
             Button {
-                text: "Test Message"
-                onClicked: addLogEntry("WARNING", "This is a test log message and you dont want to hide me")
+                text: "Export"
             }
         }
 

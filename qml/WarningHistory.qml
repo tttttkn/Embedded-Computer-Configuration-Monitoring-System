@@ -78,7 +78,7 @@ Rectangle {
         }
         // Nút Xóa Tất Cả
         Button {
-            text: "Xóa Tất Cả"
+            text: "Delete all"
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 10
             Layout.preferredWidth: 120
@@ -98,8 +98,7 @@ Rectangle {
             }
 
             onClicked: {
-                // Xử lý xóa tất cả cảnh báo ở đây
-                console.log("Đã xóa tất cả cảnh báo")
+                console.log("Delete all")
             }
         }
     }
