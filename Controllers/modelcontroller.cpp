@@ -85,6 +85,11 @@ void ModelController::initServices()
 
 }
 
+void ModelController::initModel()
+{
+    // Initialize all models
+    systemModel.init();
+}
 
 float ModelController::cpuTemp() const
 {

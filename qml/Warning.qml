@@ -160,7 +160,7 @@ Rectangle {
                 Button {
                     width: 20
                     height: 10
-                    onClicked: if (cpuWarn > 50) cpuWarn--
+                    onClicked: if (cpuWarn > 0) cpuWarn--
 
                     background: Rectangle {
                         color: parent.down ? "#dddddd" : "grey"
@@ -314,7 +314,7 @@ Rectangle {
                 Button {
                     width: 20
                     height: 10
-                    onClicked: if (ramWarn > 50) ramWarn--
+                    onClicked: if (ramWarn > 0) ramWarn--
 
                     background: Rectangle {
                         color: parent.down ? "#dddddd" : "grey"

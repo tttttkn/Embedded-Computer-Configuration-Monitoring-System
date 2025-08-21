@@ -33,7 +33,8 @@ SOURCES += \
         main.cpp
 
 RESOURCES += qml.qrc \
-    icon.qrc
+            icon.qrc \
+            config.qrc
 
 LIBS += -lstatgrab
 

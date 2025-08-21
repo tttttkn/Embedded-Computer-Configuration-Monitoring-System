@@ -24,6 +24,7 @@ void SystemModel::setCpuWarn(int value)
 {
     if (m_cpuWarn != value) {
         m_cpuWarn = value;
+        saveConfig("config.json");
     }
     Logger::addLog(QString("CPU warning level set to %1 %").arg(value));
 }
@@ -32,6 +33,7 @@ void SystemModel::setCpuCrit(int value)
 {
     if (m_cpuCrit != value) {
         m_cpuCrit = value;
+        saveConfig("config.json");
     }
     Logger::addLog(QString("CPU critical level set to %1 %").arg(value));
 }
@@ -40,6 +42,61 @@ void SystemModel::setRamWarn(int value)
 {
     if (m_ramWarn != value) {
         m_ramWarn = value;
+        saveConfig("config.json");
     }
     Logger::addLog(QString("RAM warning level set to %1 %").arg(value));
+}
+
+void SystemModel::loadConfig(const QString &jsonPath)
+{
+    QFile file(jsonPath);
+    if (!file.open(QIODevice::ReadOnly)) 
+    {
+        Logger::addLog(QString("Failed to open config file: %1").arg(file.errorString()));
+        return;
+    }
+
+    QByteArray data = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if (!doc.isObject()) 
+    {
+        Logger::addLog("Invalid JSON format");
+        return;
+    }
+
+    QJsonObject obj = doc.object();
+
+    m_cpuWarn = obj.value("cpuWarn").toInt();
+    m_cpuCrit = obj.value("cpuCrit").toInt();
+    m_ramWarn = obj.value("ramWarn").toInt();
+
+    qDebug() << "Loaded config:";
+    qDebug() << "CPU Warning Level:" << m_cpuWarn;
+    qDebug() << "CPU Critical Level:" << m_cpuCrit;
+    qDebug() << "RAM Warning Level:" << m_ramWarn;
+}
+
+void SystemModel::init()
+{
+    loadConfig("config.json");
+}
+
+void SystemModel::saveConfig(const QString &jsonPath)
+{
+    QFile file(jsonPath);
+    if (!file.open(QIODevice::WriteOnly)) {
+        Logger::addLog(QString("Failed to open config file for writing: %1").arg(file.errorString()));
+        return;
+    }
+
+    QJsonObject obj;
+    obj["cpuWarn"] = m_cpuWarn;
+    obj["cpuCrit"] = m_cpuCrit;
+    obj["ramWarn"] = m_ramWarn;
+
+    QJsonDocument doc(obj);
+    file.write(doc.toJson());
+    file.close();
 }

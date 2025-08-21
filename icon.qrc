@@ -10,5 +10,7 @@
         <file>assets/image/home_24dp.svg</file>
         <file>assets/image/notify_24dp.svg</file>
         <file>assets/image/settings_24dp.svg</file>
+        <file>assets/image/critical_24dp.svg</file>
+        <file>assets/image/warning_24dp.svg</file>
     </qresource>
 </RCC>

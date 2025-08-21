@@ -10,13 +10,10 @@ SystemService::~SystemService()
 
 void SystemService::init()
 {
-    // Initialize system information
     m_staticSystemInfo.hostname = QHostInfo::localHostName();
     m_staticSystemInfo.os = QSysInfo::prettyProductName();
     m_staticSystemInfo.kernelVersion = QSysInfo::kernelVersion();
-    // qDebug() << "Static System Info:" << m_staticSystemInfo.hostname
-    //          << m_staticSystemInfo.os
-    //          << m_staticSystemInfo.kernelVersion;
+
     emit staticSystemInfoUpdated(m_staticSystemInfo);
 }
 

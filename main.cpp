@@ -27,11 +27,6 @@ int main(int argc, char *argv[])
     qRegisterMetaType<StorageInfo>("StorageInfo");
     qRegisterMetaType<StaticSystemInfo>("StaticSystemInfo");
 
-
-
-
-
-
     QQmlApplicationEngine engine;
     ModelController modelController;
     NavigationController navigator;
@@ -41,7 +36,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("logger", Logger::getInstance());
     engine.rootContext()->setContextProperty("alertModel", Alert::getInstance());
 
-    // main.cpp
+
+
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -49,9 +45,12 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    engine.load(url);
 
+    modelController.initModel();
     modelController.initServices();
+    
+    engine.load(url);
+    
     Logger::addLog("System monitoring started");
 
 

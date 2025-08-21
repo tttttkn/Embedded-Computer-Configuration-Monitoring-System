@@ -5,6 +5,9 @@
 #include <QVariantMap>
 #include "Service/systemservice.h"
 #include "../Controllers/logger.h"
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QFile>
 
 class SystemModel : public QObject
 {
@@ -22,27 +25,30 @@ public:
     void setCpuCrit(int value);
     void setRamWarn(int value);
 
+    void init();
 
-
-signals:
+    
+    signals:
     void staticSystemInfoUpdated();
     void systemInfoUpdated();
-
-public slots:
+    
+    public slots:
     void updateStaticSystemInfo(const StaticSystemInfo &info);
     void updateSystemInfo(const QString uptime);
     int getCpuWarn() const { return m_cpuWarn; }
     int getCpuCrit() const { return m_cpuCrit; }
     int getRamWarn() const { return m_ramWarn; }
-
+    
 private:
     QVariantMap m_staticSystemInfo;
     QString m_uptime;
-
-    int m_cpuWarn{70};
-    int m_cpuCrit{90};
-    int m_ramWarn{50};
-
+    
+    int m_cpuWarn{0};
+    int m_cpuCrit{0};
+    int m_ramWarn{0};
+    
+    void loadConfig(const QString &jsonPath);
+    void saveConfig(const QString &jsonPath);
 
 };
 

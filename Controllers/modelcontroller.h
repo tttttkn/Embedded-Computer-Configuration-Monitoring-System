@@ -48,6 +48,7 @@ public:
     ~ModelController();
 
     void initServices();
+    void initModel();
 
     float cpuTemp() const;
     QVariantList cpuUsage() const;

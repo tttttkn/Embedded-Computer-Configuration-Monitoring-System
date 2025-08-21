@@ -6,6 +6,8 @@ Rectangle {
     anchors.fill: parent
     color: "transparent"
     anchors.margins: 2
+    radius: 10
+    border.width: 1
 
     ListModel {
         id: alert
@@ -51,24 +53,29 @@ Rectangle {
                 id: rectangle
                 width: parent.width
                 height: alertText.height
-                //color: "#eaeaaa"
-                //color: {
-                //    if (model.type === "CRITICAL") "#ffeeee"
-                //    else if (model.type === "WARNING") "#fff8e8"
-                //    else "white"
-                //}
-                color: "transparent"
+                color : "transparent"
+                border.color: "#217b81ee"
+                Row {
+                        id: alertRow
+                        spacing: 6
+                        anchors.fill: parent
+                        anchors.margins: 4
 
-                border.color: "#85aae5"
-                radius: 3
+                        Image {
+                            id: alertIcon
+                            source: model.type === "CRITICAL" ? "qrc:/assets/image/critical_24dp.svg" : "qrc:/assets/image/warning_24dp.svg"
+                            width: 24
+                            height: 24
+                            fillMode: Image.PreserveAspectFit
+                        }
 
-                Text {
-                    id: alertText
-                    text: "["+ timestamp + "]: " + message
-                    width: parent.width
-                    color: model.type === "CRITICAL" ? "#cc0000" : "#ff9900"
-
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        Text {
+                            id: alertText
+                            text: "[" + timestamp + "]: " + message
+                            width: parent.width - alertIcon.width - alertRow.spacing
+                            color: "black"  
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        }
                 }
 
             }
@@ -76,7 +83,7 @@ Rectangle {
 
             ScrollBar.vertical: ScrollBar {}
         }
-        // Nút Xóa Tất Cả
+
         Button {
             text: "Delete all"
             Layout.alignment: Qt.AlignHCenter
