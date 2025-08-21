@@ -8,6 +8,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QFile>
+#include <string>
+
+#define CONFIG_PATH "/usr/share/monitor/config.json"
 
 class SystemModel : public QObject
 {
@@ -46,9 +49,9 @@ private:
     int m_cpuWarn{0};
     int m_cpuCrit{0};
     int m_ramWarn{0};
-    
-    void loadConfig(const QString &jsonPath);
-    void saveConfig(const QString &jsonPath);
+
+    void loadConfig();
+    void saveConfig();
 
 };
 

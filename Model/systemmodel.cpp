@@ -24,7 +24,7 @@ void SystemModel::setCpuWarn(int value)
 {
     if (m_cpuWarn != value) {
         m_cpuWarn = value;
-        saveConfig("config.json");
+        saveConfig();
     }
     Logger::addLog(QString("CPU warning level set to %1 %").arg(value));
 }
@@ -33,7 +33,7 @@ void SystemModel::setCpuCrit(int value)
 {
     if (m_cpuCrit != value) {
         m_cpuCrit = value;
-        saveConfig("config.json");
+        saveConfig();
     }
     Logger::addLog(QString("CPU critical level set to %1 %").arg(value));
 }
@@ -42,14 +42,14 @@ void SystemModel::setRamWarn(int value)
 {
     if (m_ramWarn != value) {
         m_ramWarn = value;
-        saveConfig("config.json");
+        saveConfig();
     }
     Logger::addLog(QString("RAM warning level set to %1 %").arg(value));
 }
 
-void SystemModel::loadConfig(const QString &jsonPath)
+void SystemModel::loadConfig()
 {
-    QFile file(jsonPath);
+    QFile file(CONFIG_PATH);
     if (!file.open(QIODevice::ReadOnly)) 
     {
         Logger::addLog(QString("Failed to open config file: %1").arg(file.errorString()));
@@ -80,12 +80,15 @@ void SystemModel::loadConfig(const QString &jsonPath)
 
 void SystemModel::init()
 {
-    loadConfig("config.json");
+    // Load configuration from JSON file
+    loadConfig();
+
+    qDebug() << "System model initialized";
 }
 
-void SystemModel::saveConfig(const QString &jsonPath)
+void SystemModel::saveConfig()
 {
-    QFile file(jsonPath);
+    QFile file(CONFIG_PATH);
     if (!file.open(QIODevice::WriteOnly)) {
         Logger::addLog(QString("Failed to open config file for writing: %1").arg(file.errorString()));
         return;

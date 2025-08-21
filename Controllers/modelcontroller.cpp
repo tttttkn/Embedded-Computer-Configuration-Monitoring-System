@@ -88,6 +88,7 @@ void ModelController::initServices()
 void ModelController::initModel()
 {
     // Initialize all models
+    qDebug() << "Initializing system model";
     systemModel.init();
 }
 
